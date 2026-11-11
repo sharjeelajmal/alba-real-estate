@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import heroHouse from '@/assets/images/photos/hero-house.jpg';
+import Button from '@/components/ui/Button.astro';
+import Container from '@/components/ui/Container.astro';
+import Icon from '@/components/ui/Icon.astro';
+import Swatches from './Swatches.astro';
+---
+
+<section class="relative overflow-hidden pt-6 sm:pt-8" aria-labelledby="sg-title">
+  <!-- Warm halo behind the house -->
+  <div class="pointer-events-none absolute top-12 right-[8%] hidden size-[34rem] rounded-full bg-gold-100/80 blur-[2px] lg:block" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute top-24 right-[14%] hidden size-[30rem] rounded-full border border-gold-200 lg:block" aria-hidden="true"></div>
+
+  <!-- House photo bleeding off the right edge, starting behind the header -->
+  <div class="relative mx-(--spacing-container) mb-8 lg:absolute lg:-top-8 lg:right-0 lg:mx-0 lg:mb-0 lg:h-[34rem] lg:w-[56%]">
+    <Image
+      src={heroHouse}
+      alt="Modern two-storey home with warm interior lighting at dusk"
+      widths={[640, 960, 1280, 1600, 2000]}
+      sizes="(min-width: 1024px) 60vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="h-auto w-full rounded-lg object-cover object-[60%_28%] animate-enter-scale lg:h-full lg:rounded-none lg:mask-fade-left lg:mix-blend-multiply lg:sepia-[.15] lg:saturate-[1.15] lg:contrast-[1.08]"
+    />
+  </div>
+
+  <!-- Gold light streaks -->
+  <svg class="draw-path pointer-events-none absolute top-0 right-[18%] z-[1] hidden h-[24rem] w-[30rem] [--path-length:900] lg:block" viewBox="0 0 640 420" fill="none" aria-hidden="true">
+    <path d="M640 0 C 560 60, 480 120, 380 260" class="stroke-gold-200" stroke-width="2.5" />
+    <path d="M610 0 C 540 50, 470 110, 360 250" class="stroke-gold-200" stroke-width="1" />
+  </svg>
+  <svg class="draw-path pointer-events-none absolute top-40 left-0 hidden h-[34rem] w-40 [--path-length:900] lg:block" viewBox="0 0 160 540" fill="none" aria-hidden="true">
+    <path d="M0 0 C 60 120, 110 260, 150 540" class="stroke-gold-300/80" stroke-width="1.4" />
+  </svg>
+
+  <Container class="relative">
+    <div class="max-w-xl pb-8 lg:min-h-[19.5rem] lg:pt-4">
+      <span class="inline-flex items-center gap-3 rounded-full bg-surface/90 px-4 py-2 text-eyebrow text-accent shadow-sm animate-enter">
+        <span class="h-px w-6 bg-current" aria-hidden="true"></span>
+        Design system
+      </span>
+      <h1 id="sg-title" class="mt-7 text-display animate-enter animation-delay-100">
+        <span class="text-gold">Alba</span> style guide
+      </h1>
+      <p class="mt-5 max-w-md text-subtitle text-heading animate-enter animation-delay-200">
+        Tokens, typography and components shared by every page.
+      </p>
+      <div class="mt-7 flex flex-wrap items-center gap-6 animate-enter animation-delay-300">
+        <Button href="#sg-components" arrow>Explore Design</Button>
+        <a href="#sg-components" class="group/play inline-flex items-center gap-3 text-small font-semibold text-heading">
+          <span class="grid size-10 place-items-center rounded-full border-2 border-heading transition-[background-color,color] duration-300 group-hover/play:bg-heading group-hover/play:text-surface">
+            <Icon name="play" class="ml-0.5 size-4" />
+          </span>
+          Watch Demo
+        </a>
+      </div>
+    </div>
+
+    <Swatches />
+  </Container>
+</section>

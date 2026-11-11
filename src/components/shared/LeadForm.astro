@@ -1,0 +1,80 @@
+---
+/**
+ * Lead capture form (Netlify Forms). Name, phone, email + required consent, honeypot, UTM capture.
+ * Behaviour lives in scripts/forms.ts (validation, AJAX submit, Lead event, redirect).
+ */
+import Button from '@/components/ui/Button.astro';
+import Checkbox from '@/components/ui/Checkbox.astro';
+import Field from '@/components/ui/Field.astro';
+import { ROUTES } from '@/constants/navigation';
+import { site } from '@/lib/site';
+
+interface Props {
+  /** Unique Netlify form name */
+  formName: string;
+  /** Where to send the visitor after a successful submit */
+  successUrl: string;
+  title: string;
+  note?: string;
+  submitLabel: string;
+  /** Lead source shown in the client's notification email */
+  source: string;
+  id?: string;
+  /** stack = vertical card, inline = wide glass panel (fields in a row on desktop) */
+  layout?: 'stack' | 'inline';
+  class?: string;
+}
+
+const { formName, successUrl, title, note, submitLabel, source, id = 'get-guide', layout = 'stack', class: className } = Astro.props;
+const inline = layout === 'inline';
+const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'] as const;
+---
+
+<form
+  id={id}
+  name={formName}
+  method="POST"
+  action={successUrl}
+  data-netlify="true"
+  netlify-honeypot="company_website"
+  data-lead-form
+  data-success-url={successUrl}
+  data-lead-source={source}
+  novalidate
+  class:list={['grid gap-3.5 rounded-xl border border-surface/80 bg-surface/70 p-5 shadow-lg backdrop-blur-xl sm:gap-5 sm:p-8', inline && 'lg:gap-4 lg:p-6', className]}
+>
+  <input type="hidden" name="form-name" value={formName} />
+  <input type="hidden" name="lead_source" value={source} />
+  <input type="hidden" name="page_url" value="" data-page-url />
+  {UTM_FIELDS.map((field) => <input type="hidden" name={field} value="" data-utm={field} />)}
+
+  <!-- Honeypot: hidden from people, bots fill it and Netlify discards the submission -->
+  <p class="sr-only" aria-hidden="true">
+    <label>Leave this field empty <input name="company_website" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class:list={[inline && 'lg:flex lg:items-baseline lg:justify-between lg:gap-6']}>
+    <h2 class="text-h3">{title}</h2>
+    {note && <p class="mt-1 text-small text-muted-foreground lg:mt-0">{note}</p>}
+  </div>
+
+  <div class:list={['grid gap-3.5 sm:gap-5', inline && 'lg:grid-cols-3 lg:gap-4']}>
+    <Field name="full_name" label="Full name" icon="user" autocomplete="name" placeholder="Jane Smith" required error="Enter your full name." />
+    <Field name="phone" type="tel" label="Phone" icon="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 123-4567" required error="Enter a 10-digit US phone number." />
+    <Field name="email" type="email" label="Email" icon="mail" autocomplete="email" inputmode="email" placeholder="jane@email.com" required error="Enter a valid email address." />
+  </div>
+
+  <div class:list={['grid gap-3.5 sm:gap-5', inline && 'lg:grid-cols-[1fr_auto] lg:items-center lg:gap-8']}>
+  <Checkbox name="consent" required>
+    I agree to be contacted by {site.name} by phone, text and email about my inquiry, including by automated means.
+    Consent is not a condition of any purchase. Message and data rates may apply. See our
+    <a href={ROUTES.privacy} target="_blank" class="font-medium text-accent underline underline-offset-2">Privacy Policy</a>.
+  </Checkbox>
+
+  <div class="mt-1 grid gap-2.5">
+    <Button type="submit" size="lg" block={!inline} class={inline ? 'w-full lg:w-auto' : undefined} icon="download" arrow data-submit>{submitLabel}</Button>
+    <p class="text-center text-caption text-danger empty:hidden" role="alert" aria-live="polite" data-form-status></p>
+    <p class="text-center text-caption text-muted-foreground">Free · No obligation · Private</p>
+  </div>
+  </div>
+</form>

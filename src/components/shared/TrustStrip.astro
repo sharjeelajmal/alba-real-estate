@@ -1,0 +1,33 @@
+---
+/**
+ * Factual trust points from src/data/site.json in the style-guide stats strip.
+ * overlapFooter: sits half over the footer's cream wave, as in the design.
+ */
+import Container from '@/components/ui/Container.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+import { site } from '@/lib/site';
+
+interface Props {
+  overlapFooter?: boolean;
+  class?: string;
+}
+const { overlapFooter = false, class: className } = Astro.props;
+---
+
+<div class:list={['relative z-10', overlapFooter && '-mb-12 sm:-mb-20', className]}>
+  <Container>
+    <ul class="grid grid-cols-1 gap-4 rounded-xl border border-gold-200/70 bg-ivory-50/95 px-5 py-5 shadow-md backdrop-blur-xl sm:grid-cols-2 sm:gap-6 lg:-mx-8 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-border lg:px-6 lg:py-6">
+      {
+        site.trust.map((item, i) => (
+          <li class="flex items-center gap-3.5 lg:justify-center lg:px-4" data-reveal="fade-up" data-reveal-delay={i * 80}>
+            <Icon name={item.icon as IconName} class="size-9 shrink-0 text-gold-700 sm:size-11" strokeWidth={1.6} />
+            <span class="grid">
+              <span class="text-h3 text-heading">{item.title}</span>
+              <span class="text-caption text-muted-foreground">{item.text}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</div>

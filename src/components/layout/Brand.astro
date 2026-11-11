@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/alba-logo.png';
+import { site } from '@/lib/site';
+
+interface Props {
+  /** Wrap the logo in a link to the homepage (off on landing pages to keep focus on the form) */
+  linkHome?: boolean;
+}
+
+const { linkHome = true } = Astro.props;
+const Wrapper = linkHome ? 'a' : 'div';
+---
+
+<div class="flex min-w-0 items-center gap-3.5 sm:gap-4">
+  <Wrapper href={linkHome ? '/' : undefined} aria-label={linkHome ? `${site.name}, home` : undefined} class="block shrink-0">
+    <Image
+      src={logo}
+      alt={site.name}
+      widths={[220, 330]}
+      sizes="(min-width: 640px) 128px, 104px"
+      loading="eager"
+      fetchpriority="high"
+      class="h-10 w-auto transition-[height] duration-500 ease-out-expo sm:h-14 group-data-[scrolled=true]/header:h-11 sm:group-data-[scrolled=true]/header:h-12"
+    />
+  </Wrapper>
+  <p class="flex flex-col border-l border-border-strong pl-3.5 text-micro font-medium text-heading sm:pl-4">
+    <span class="font-bold uppercase tracking-widest text-heading">Powered by</span>
+    {site.poweredBy}
+  </p>
+</div>

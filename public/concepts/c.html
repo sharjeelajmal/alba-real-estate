@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concept C · Personal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400..800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f3f3ef;
+    --white: #ffffff;
+    --olive: #2f3127;
+    --muted: #63665b;
+    --brass: #94721f;
+    --brass-soft: #ece3cc;
+    --line: #dcdcd3;
+    --ease: cubic-bezier(.16,1,.3,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Onest", system-ui, sans-serif; color: var(--olive); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  header { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  header img { height: 42px; }
+  header span { font-size: 12px; color: var(--muted); text-align: right; line-height: 1.35; }
+  header b { display: block; color: var(--olive); font-weight: 600; }
+
+  .hero { display: grid; gap: 28px; padding: 8px 0 56px; }
+  @media (min-width: 980px) { .hero { grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding: 32px 0 80px; } }
+
+  .photos { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .photos figure { margin: 0; border-radius: 22px; overflow: hidden; background: var(--brass-soft); aspect-ratio: 4 / 5; }
+  .photos figure:nth-child(2) { margin-top: 44px; }
+  .photos img { width: 100%; height: 100%; object-fit: cover; object-position: top; transform: scale(1.08); animation: settle 1.6s var(--ease) forwards; }
+  @keyframes settle { to { transform: scale(1); } }
+  .badge { position: absolute; left: 14px; bottom: 14px; background: var(--white); border-radius: 14px; padding: 12px 16px; font-size: 14px; line-height: 1.35; box-shadow: 0 14px 40px -18px rgba(47,49,39,.5); }
+  .badge b { display: block; font-weight: 650; }
+  .badge span { color: var(--muted); font-size: 13px; }
+  @media (min-width: 980px) { .photos { order: 2; } }
+
+  h1 { margin: 0; font-size: clamp(38px, 6.2vw, 66px); line-height: 1.02; letter-spacing: -.035em; font-weight: 700; }
+  .sub { margin: 20px 0 0; font-size: clamp(17px, 1.5vw, 19px); line-height: 1.6; color: var(--muted); max-width: 32em; }
+
+  form { margin-top: 28px; background: var(--white); border-radius: 22px; padding: 22px; border: 1px solid var(--line); }
+  @media (min-width: 640px) { form { padding: 28px; } }
+  .grid2 { display: grid; gap: 12px; }
+  @media (min-width: 640px) { .grid2 { grid-template-columns: 1fr 1fr; } .grid2 .full { grid-column: 1 / -1; } }
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  input[type=text], input[type=email], input[type=tel] { width: 100%; height: 52px; border: 1.5px solid var(--line); border-radius: 12px; padding: 0 14px; font: inherit; font-size: 16px; background: var(--bg); transition: border-color .2s, background .2s; }
+  input:focus { outline: none; border-color: var(--olive); background: var(--white); }
+  .consent { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 12.5px; line-height: 1.5; color: var(--muted); margin: 16px 0; }
+  .consent input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--olive); }
+  button { width: 100%; height: 56px; border: 0; border-radius: 12px; background: var(--olive); color: #fff; font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; transition: transform .3s var(--ease), background .2s; }
+  button:hover { background: #1c1d17; transform: translateY(-2px); }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+  .meta i { font-style: normal; color: var(--brass); font-weight: 700; margin-right: 4px; }
+
+  .inside { background: var(--white); border-top: 1px solid var(--line); padding: 56px 0; }
+  .inside ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  @media (min-width: 900px) { .inside ol { grid-template-columns: repeat(4, 1fr); gap: 28px; } }
+  .inside li { padding: 18px 0; border-bottom: 1px solid var(--line); }
+  @media (min-width: 900px) { .inside li { border: 0; border-top: 2px solid var(--olive); padding-top: 16px; } }
+  .inside b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .inside p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+  .inside h2 { margin: 0 0 24px; font-size: 26px; letter-spacing: -.02em; }
+  footer { padding: 22px 0 40px; font-size: 13px; color: var(--muted); }
+  .enter { opacity: 0; transform: translateY(16px); animation: in .9s var(--ease) forwards; }
+  .d1 { animation-delay: .15s } .d2 { animation-delay: .27s } .d3 { animation-delay: .39s }
+  @keyframes in { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .enter, .photos img { animation: none; opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><img src="img/logo.png" alt="Alba Real Estate Group"><span>Powered by<b>Loan Advisor Group</b></span></header>
+  <section class="hero">
+    <div class="photos enter">
+      <figure><img src="img/jorge.jpg" alt="Jorge Alba"></figure>
+      <figure><img src="img/chloe.jpg" alt="Chloe Alba"></figure>
+      <div class="badge"><b>Jorge and Chloe Alba</b><span>Your mortgage team</span></div>
+    </div>
+    <div>
+      <h1 class="enter d1">First home? Here's the guide we give every buyer.</h1>
+      <p class="sub enter d2">Budget, down payment options, credit and closing, explained by the people who'll actually help you buy.</p>
+      <form class="enter d3" onsubmit="return false">
+        <div class="grid2">
+          <div class="full"><label for="c1">Full name</label><input id="c1" type="text" autocomplete="name" placeholder="Jane Smith"></div>
+          <div><label for="c2">Phone</label><input id="c2" type="tel" autocomplete="tel" placeholder="(555) 123-4567"></div>
+          <div><label for="c3">Email</label><input id="c3" type="email" autocomplete="email" placeholder="jane@email.com"></div>
+        </div>
+        <label class="consent"><input type="checkbox"><span>I agree to be contacted by Alba Real Estate Group by phone, text and email. Consent isn't a condition of any purchase. Privacy Policy.</span></label>
+        <button>Download the free guide</button>
+        <div class="meta"><span><i>✓</i>Instant download</span><span><i>✓</i>Copy sent by email</span><span><i>✓</i>No obligation</span></div>
+      </form>
+    </div>
+  </section>
+</div>
+<section class="inside">
+  <div class="wrap">
+    <h2>What's in the guide</h2>
+    <ol>
+      <li><b>The path to keys</b><p>Every step from pre-approval to closing day.</p></li>
+      <li><b>Down payment options</b><p>Low and no-down programs for first-time buyers.</p></li>
+      <li><b>Credit and your rate</b><p>What lenders check and how to improve it.</p></li>
+      <li><b>Mistakes to avoid</b><p>The costly ones we see most often.</p></li>
+    </ol>
+  </div>
+</section>
+<footer><div class="wrap">Individual NMLS 1935035 · Company NMLS: Loan Advisor Group 1647915 · CO License 100542014 · Equal Housing Opportunity</div></footer>
+</body>
+</html>

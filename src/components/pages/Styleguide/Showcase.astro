@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import houseNight from '@/assets/images/photos/house-hillside-night.jpg';
+import Button from '@/components/ui/Button.astro';
+import Checkbox from '@/components/ui/Checkbox.astro';
+import Container from '@/components/ui/Container.astro';
+import Field from '@/components/ui/Field.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { ROUTES } from '@/constants/navigation';
+---
+
+<section class="relative pb-8" aria-label="Form and card components">
+  <div class="dot-grid pointer-events-none absolute top-10 -left-10 hidden size-56 rounded-full opacity-60 lg:block" aria-hidden="true"></div>
+  <svg class="draw-path pointer-events-none absolute top-24 left-0 hidden h-80 w-[46rem] [--path-length:1200] lg:block" viewBox="0 0 740 320" fill="none" aria-hidden="true">
+    <path d="M0 260 C 120 40, 260 40, 420 120 S 680 260, 740 40" class="stroke-gold-300/80" stroke-width="1.3" />
+  </svg>
+
+  <Container class="relative grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1fr]">
+    <!-- Form card -->
+    <form class="grid gap-4 rounded-xl bg-ivory-50 p-6 shadow-lg ring-1 ring-surface sm:px-8 sm:py-7" onsubmit="return false" data-reveal="slide-right">
+      <p class="text-h3 text-heading">Form fields</p>
+      <Field name="sg_name" label="Full name" icon="user" autocomplete="name" placeholder="Jane Smith" required />
+      <Field name="sg_email" type="email" label="Email" icon="mail" autocomplete="email" placeholder="jane@email.com" required class="[&_input]:border-gold-500 [&_input]:shadow-ring" />
+      <Checkbox name="sg_consent">
+        I agree to be contacted by Alba Real Estate Group by phone, text and email. Consent is not a condition of any purchase. See our
+        <a href={ROUTES.privacy} class="text-accent underline underline-offset-2">Privacy Policy</a>.
+      </Checkbox>
+      <Button type="submit" block size="lg" icon="download" arrow>Download the Free Guide</Button>
+    </form>
+
+    <div class="grid gap-6">
+      <!-- Interactive card -->
+      <div class="group/card ambient-glow-dark relative overflow-hidden rounded-xl border border-inverse-border p-7 shadow-lg transition-[translate,box-shadow] duration-500 ease-out-expo hover:-translate-y-1.5 sm:p-8" data-reveal="slide-left">
+        <!-- Photo in a large circle frame, top-right -->
+        <div class="pointer-events-none absolute -top-20 -right-44 size-[24rem] overflow-hidden rounded-full ring-1 ring-gold-500/50 transition-transform duration-[1.4s] ease-out-expo group-hover/card:scale-105">
+          <Image src={houseNight} alt="" widths={[400, 800]} sizes="384px" class="h-full w-full object-cover object-[35%_55%]" />
+        </div>
+        <div class="pointer-events-none absolute -top-24 -right-48 size-[26rem] rounded-full border border-gold-500/35" aria-hidden="true"></div>
+        <div class="relative max-w-[58%]">
+          <Icon name="home" class="size-8 text-gold-500" strokeWidth={1.5} />
+          <p class="mt-4 text-h3 text-surface">Interactive card</p>
+          <p class="mt-1.5 text-caption text-inverse-muted">Lifts on hover with a smooth eased transition.</p>
+          <Button href={ROUTES.home} variant="outline-gold" size="sm" arrow class="mt-6">Explore More</Button>
+        </div>
+      </div>
+
+      <!-- Inverse surface -->
+      <div class="ambient-glow-dark relative overflow-hidden rounded-xl border border-inverse-border px-7 py-6 shadow-lg sm:px-8" data-reveal="slide-left" data-reveal-delay="120">
+        <div class="pointer-events-none absolute top-1/2 -right-12 size-64 -translate-y-1/2" aria-hidden="true">
+          <span class="absolute inset-0 rounded-full border border-gold-500/15"></span>
+          <span class="absolute inset-6 rounded-full border border-gold-500/20"></span>
+          <span class="absolute inset-12 rounded-full border border-gold-500/25"></span>
+        </div>
+        <button type="button" aria-label="Play video" class="absolute top-1/2 right-14 grid size-12 -translate-y-1/2 place-items-center rounded-full border-2 border-gold-500 bg-espresso-950/60 text-gold-500 shadow-glow transition-[background-color,color] duration-300 hover:bg-gold-500 hover:text-espresso-950">
+          <Icon name="play" class="ml-0.5 size-4.5" />
+        </button>
+        <div class="relative">
+          <p class="text-h3 text-surface">Inverse surface</p>
+          <p class="mt-1.5 text-caption text-inverse-muted">Used for the footer and CTA bands.</p>
+          <Button variant="light" size="sm" icon="calendar" class="mt-6">Book a Review</Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

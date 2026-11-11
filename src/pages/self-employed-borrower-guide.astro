@@ -1,0 +1,11 @@
+---
+import GuideLanding from '@/components/pages/GuideLanding/GuideLanding.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { getGuide } from '@/lib/guides';
+
+const guide = getGuide('self-employed-borrower');
+---
+
+<LandingLayout title={guide.seo.title} description={guide.seo.description}>
+  <GuideLanding guide={guide} />
+</LandingLayout>

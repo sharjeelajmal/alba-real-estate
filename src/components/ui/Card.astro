@@ -1,0 +1,38 @@
+---
+import type { HTMLAttributes, HTMLTag } from 'astro/types';
+
+type Variant = 'surface' | 'glass' | 'dark';
+
+interface Props extends Omit<HTMLAttributes<'div'>, 'class'> {
+  as?: HTMLTag;
+  /** surface = white card, glass = frosted over imagery/glow, dark = espresso luxury card */
+  variant?: Variant;
+  /** Lift slightly on hover (for clickable cards) */
+  interactive?: boolean;
+  padding?: 'none' | 'md' | 'lg';
+  class?: string;
+}
+
+const { as: Tag = 'div', variant = 'surface', interactive = false, padding = 'md', class: className, ...rest } = Astro.props;
+
+const VARIANTS: Record<Variant, string> = {
+  surface: 'border border-border bg-surface shadow-sm',
+  glass: 'glass',
+  dark: 'ambient-glow-dark border border-inverse-border text-inverse-foreground shadow-lg [--color-heading:var(--color-surface)]',
+};
+
+const PADDING = { none: '', md: 'p-5 sm:p-7', lg: 'p-5 sm:p-10' } as const;
+---
+
+<Tag
+  {...rest}
+  class:list={[
+    'relative overflow-hidden rounded-xl',
+    VARIANTS[variant],
+    PADDING[padding],
+    interactive && 'transition-[translate,box-shadow] duration-500 ease-out-expo hover:-translate-y-1.5 hover:shadow-lg',
+    className,
+  ]}
+>
+  <slot />
+</Tag>

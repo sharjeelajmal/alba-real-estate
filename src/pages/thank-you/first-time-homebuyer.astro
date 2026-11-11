@@ -1,0 +1,11 @@
+---
+import ThankYou from '@/components/pages/ThankYou/ThankYou.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { getGuide } from '@/lib/guides';
+
+const guide = getGuide('first-time-homebuyer');
+---
+
+<LandingLayout title="Your guide is ready" description="Download your free first-time homebuyer guide." noindex>
+  <ThankYou guide={guide} />
+</LandingLayout>

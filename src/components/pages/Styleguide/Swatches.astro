@@ -1,0 +1,27 @@
+---
+const SWATCHES = [
+  { name: 'Primary', className: 'bg-espresso-700' },
+  { name: 'Primary hover', className: 'bg-espresso-900' },
+  { name: 'Accent', className: 'bg-gold-700' },
+  { name: 'Accent bright', className: 'bg-gold-600' },
+  { name: 'Accent soft', className: 'bg-gold-200' },
+  { name: 'Muted', className: 'bg-ivory-200' },
+  { name: 'Background', className: 'bg-ivory-100' },
+  { name: 'Inverse', className: 'bg-espresso-950' },
+];
+---
+
+<div class="relative z-10 grid border border-surface/80 bg-surface/45 shadow-md backdrop-blur-xl grid-cols-2 gap-3 rounded-xl p-4 sm:grid-cols-4 sm:gap-x-4 sm:gap-y-3" data-reveal="fade-up">
+  {
+    SWATCHES.map((s, i) => (
+      <div
+        class:list={['overflow-hidden rounded-md bg-surface shadow-sm ring-1 ring-border/70 transition-[translate,box-shadow] duration-500 ease-out-expo hover:-translate-y-1 hover:shadow-md']}
+        data-reveal="fade-up"
+        data-reveal-delay={i * 50}
+      >
+        <div class:list={['rounded-t-md', i < 4 ? 'h-14 sm:h-16' : 'h-10 sm:h-11', s.className]} />
+        <p class="px-3 py-2 text-caption font-medium text-heading">{s.name}</p>
+      </div>
+    ))
+  }
+</div>

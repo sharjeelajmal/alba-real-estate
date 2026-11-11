@@ -1,0 +1,98 @@
+---
+/**
+ * Landing hero in the style-guide design: house photo bleeding off the right edge,
+ * headline left, and the lead form as a wide glass panel overlapping the photo.
+ */
+import { Image } from 'astro:assets';
+import heroHouse from '@/assets/images/photos/hero-house.jpg';
+import AdvisorsChip from '@/components/shared/AdvisorsChip.astro';
+import LeadForm from '@/components/shared/LeadForm.astro';
+import Button from '@/components/ui/Button.astro';
+import Container from '@/components/ui/Container.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { site } from '@/lib/site';
+import type { Guide } from '@/types/site';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+---
+
+<section class="relative overflow-hidden pt-5 sm:pt-8" aria-labelledby="hero-title">
+  <!-- Warm halo behind the house -->
+  <div class="pointer-events-none absolute top-12 right-[8%] hidden size-[34rem] rounded-full bg-gold-100/80 lg:block" aria-hidden="true"></div>
+  <div class="pointer-events-none absolute top-24 right-[14%] hidden size-[30rem] rounded-full border border-gold-200 lg:block" aria-hidden="true"></div>
+
+  <!-- House photo bleeding off the right edge -->
+  <div class="relative mx-(--spacing-container) mb-5 lg:absolute lg:-top-8 lg:right-0 lg:mx-0 lg:mb-0 lg:h-[34rem] lg:w-[56%]">
+    <Image
+      src={heroHouse}
+      alt="Modern home with warm interior lighting at dusk"
+      widths={[640, 960, 1280, 1600, 2000]}
+      sizes="(min-width: 1024px) 56vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="h-44 w-full rounded-lg object-cover object-[60%_35%] animate-enter-scale sm:h-72 lg:h-full lg:rounded-none lg:mask-fade-left lg:mix-blend-multiply lg:sepia-[.15] lg:saturate-[1.15] lg:contrast-[1.08]"
+    />
+  </div>
+
+  <!-- Gold light streaks -->
+  <svg class="draw-path pointer-events-none absolute top-0 right-[18%] z-[1] hidden h-[24rem] w-[30rem] overflow-hidden [--path-length:900] lg:block" viewBox="0 0 640 420" fill="none" aria-hidden="true">
+    <path d="M640 0 C 560 60, 480 120, 380 260" class="stroke-gold-200" stroke-width="2.5" />
+    <path d="M610 0 C 540 50, 470 110, 360 250" class="stroke-gold-200" stroke-width="1" />
+  </svg>
+  <svg class="draw-path pointer-events-none absolute top-40 left-0 hidden h-[34rem] w-40 overflow-hidden [--path-length:900] lg:block" viewBox="0 0 160 540" fill="none" aria-hidden="true">
+    <path d="M0 0 C 60 120, 110 260, 150 540" class="stroke-gold-300/80" stroke-width="1.4" />
+  </svg>
+
+  <Container class="relative">
+    <div class="max-w-2xl pb-6 lg:min-h-[21rem] lg:pt-4 lg:pb-10">
+      <span class="inline-flex items-center gap-2.5 rounded-full bg-surface/90 px-3.5 py-1.5 text-eyebrow text-accent shadow-sm animate-enter sm:px-4 sm:py-2">
+        <span class="h-px w-5 bg-current sm:w-6" aria-hidden="true"></span>
+        {guide.badge}
+      </span>
+      <h1 id="hero-title" class="mt-4 text-hero animate-enter animation-delay-100 sm:mt-6">
+        {guide.headline}
+        <span class="block text-gold">{guide.headlineAccent}</span>
+      </h1>
+      <p class="mt-3 max-w-lg text-lead text-heading/80 animate-enter animation-delay-200 sm:mt-5">{guide.intro}</p>
+      <div class="mt-5 hidden flex-wrap items-center gap-6 animate-enter animation-delay-300 sm:mt-7 sm:flex">
+        <Button href="#get-guide" icon="download" arrow>Get the free guide</Button>
+        <a href={site.links.calendly} target="_blank" rel="noopener" data-track="ScheduleCallClick" class="group/play inline-flex items-center gap-3 text-small font-semibold text-heading">
+          <span class="grid size-10 place-items-center rounded-full border-2 border-heading transition-[background-color,color] duration-300 group-hover/play:bg-heading group-hover/play:text-surface">
+            <Icon name="calendar" class="size-4" strokeWidth={2} />
+          </span>
+          Book a 15-min review
+        </a>
+      </div>
+    </div>
+
+    <!-- Lead form: wide glass panel overlapping the photo (like the style guide swatch panel) -->
+    <div class="relative z-10 animate-enter animation-delay-300">
+      <LeadForm
+        layout="inline"
+        formName={guide.formName}
+        successUrl={guide.thankYouRoute}
+        title={guide.formTitle}
+        note={guide.formNote}
+        submitLabel={guide.submitLabel}
+        source={guide.seo.title}
+      />
+    </div>
+
+    <div class="flex flex-col gap-5 py-7 sm:flex-row sm:items-center sm:justify-between sm:py-10">
+      <AdvisorsChip />
+      <ul class="flex flex-wrap gap-x-5 gap-y-2 text-caption font-medium text-heading">
+        {
+          ['Instant PDF download', 'Copy sent by email', 'No obligation'].map((t) => (
+            <li class="flex items-center gap-1.5">
+              <Icon name="check-circle" class="size-4 text-gold-600" strokeWidth={2} />
+              {t}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Container>
+</section>

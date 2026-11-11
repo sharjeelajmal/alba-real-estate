@@ -1,0 +1,62 @@
+---
+import { Image } from 'astro:assets';
+import house2 from '@/assets/images/photos/house-pool-dusk.jpg';
+import Badge from '@/components/ui/Badge.astro';
+import Button from '@/components/ui/Button.astro';
+import Container from '@/components/ui/Container.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { ROUTES } from '@/constants/navigation';
+---
+
+<section id="sg-components" class="relative overflow-hidden pt-10 pb-8 sm:pt-10" aria-label="Typography and buttons">
+  <!-- Large gold arc on the left -->
+  <div class="pointer-events-none absolute top-[3.5rem] left-14 hidden size-[19rem] rounded-full border-[1.5px] border-gold-400/70 [mask-image:linear-gradient(to_right,#000_18%,transparent_42%)] lg:block" aria-hidden="true"></div>
+
+  <Container class="relative">
+    <div class="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.25fr_1fr]">
+      <div data-reveal="fade-up">
+        <Eyebrow tone="heading">Display heading</Eyebrow>
+        <p class="mt-4 text-h1 text-heading">Heading <span class="text-gold">one</span></p>
+        <p class="mt-1 text-h2 text-heading">Heading two for sections</p>
+        <p class="mt-2 text-h3 text-heading">Heading three for cards</p>
+        <p class="mt-3 text-body text-foreground">Lead text explains the offer in one or two calm, confident sentences.</p>
+        <p class="mt-2 max-w-lg text-body text-foreground">
+          Body copy is set in Inter for clarity on every phone. <span class="font-semibold text-accent">Animated</span>
+          <span class="font-semibold text-heading">text</span> lifts use the accent token.
+        </p>
+      </div>
+
+      <!-- Tilted photo with "Premium Properties" card -->
+      <div class="relative mx-auto h-72 w-full max-w-md sm:h-[22rem] lg:max-w-xl lg:translate-x-12 lg:translate-y-6" data-reveal="slide-left">
+        <div class="dot-grid absolute -top-4 -right-4 h-24 w-36 opacity-70" aria-hidden="true"></div>
+        <!-- cream plates -->
+        <div class="absolute top-0 left-0 size-44 -rotate-[6deg] rounded-xl bg-gold-100 shadow-sm" aria-hidden="true"></div>
+        <div class="absolute -right-2 bottom-0 h-60 w-[66%] rotate-[8deg] rounded-xl bg-gold-100 shadow-md" aria-hidden="true"></div>
+        <!-- Premium card sits behind the photo -->
+        <div class="glass absolute top-7 left-3 grid w-40 -rotate-[6deg] place-items-center gap-3 rounded-lg px-4 py-7 text-center">
+          <span class="grid size-9 place-items-center rounded-full bg-gold-700 text-surface">
+            <Icon name="home" class="size-4.5" strokeWidth={2} />
+          </span>
+          <span class="text-body leading-tight font-semibold text-heading">Premium<br />Properties</span>
+        </div>
+        <div class="absolute top-2 right-0 z-10 h-[17.5rem] w-[66%] rotate-[8deg] overflow-hidden rounded-xl shadow-lg transition-[rotate] duration-700 ease-out-expo hover:rotate-[4deg]">
+          <Image src={house2} alt="Modern home with an infinity pool at dusk" widths={[400, 704, 1000]} sizes="380px" class="h-full w-full scale-110 object-cover" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons and badges -->
+    <div class="mt-8 flex flex-wrap items-center gap-3 sm:gap-5" data-reveal="fade-up">
+      <Button href={ROUTES.home} icon="calendar" arrow>Book a Review</Button>
+      <Button href={ROUTES.home} variant="accent" icon="download">Get the Guide</Button>
+      <Button href={ROUTES.home} variant="light" iconAfter="arrow-right">Take the Quiz</Button>
+      <Button href={ROUTES.home} variant="ghost" iconAfter="arrow-right">Ghost</Button>
+      <Button size="sm">Small</Button>
+      <Badge icon="shield">Licensed &amp; regulated</Badge>
+    </div>
+    <div class="mt-4" data-reveal="fade-up">
+      <Badge tone="neutral" icon="clock">Takes 60 seconds</Badge>
+    </div>
+  </Container>
+</section>

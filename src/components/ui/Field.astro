@@ -1,0 +1,61 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+
+type InputType = 'text' | 'email' | 'tel';
+
+interface Props extends Omit<HTMLAttributes<'input'>, 'type' | 'class'> {
+  name: string;
+  label: string;
+  type?: InputType;
+  /** Leading icon inside the input */
+  icon?: IconName;
+  /** Shown when validation fails (scripts/forms.ts toggles data-invalid on the wrapper) */
+  error?: string;
+  /** Render in the invalid state (previews only; runtime validation sets data-invalid itself) */
+  invalid?: boolean;
+  class?: string;
+}
+
+const { name, label, type = 'text', icon, error, invalid = false, required = false, class: className, id = `f-${name}`, ...rest } = Astro.props;
+const errorId = `${id}-error`;
+---
+
+<div class:list={['group/field grid gap-1.5', className]} data-field data-invalid={invalid ? '' : undefined}>
+  <label for={id} class="text-small font-semibold text-heading">
+    {label}{required && <span class="text-accent" aria-hidden="true"> *</span>}
+  </label>
+  <div class="relative">
+    {
+      icon && (
+        <Icon
+          name={icon}
+          class="pointer-events-none absolute top-1/2 left-3.5 size-4.5 -translate-y-1/2 text-olive-500 transition-colors duration-200 group-focus-within/field:text-accent-bright group-data-invalid/field:text-danger"
+        />
+      )
+    }
+    <input
+      id={id}
+      name={name}
+      type={type}
+      required={required}
+      aria-describedby={error ? errorId : undefined}
+      class:list={[
+        'min-h-12 w-full appearance-none rounded-md border border-border bg-ivory-50 pr-4 text-base text-foreground',
+        icon ? 'pl-11' : 'pl-4',
+        'placeholder:text-olive-500/70',
+        'transition-[border-color,box-shadow,background-color] duration-200 ease-out',
+        'hover:border-gold-300 focus:border-gold-500 focus:bg-surface focus:shadow-ring focus:outline-none',
+        'group-data-invalid/field:border-danger group-data-invalid/field:focus:shadow-none',
+      ]}
+      {...rest}
+    />
+  </div>
+  {
+    error && (
+      <p id={errorId} class="hidden text-caption text-danger group-data-invalid/field:block" role="alert">
+        {error}
+      </p>
+    )
+  }
+</div>

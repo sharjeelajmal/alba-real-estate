@@ -1,0 +1,22 @@
+---
+/** Shared composition for both Meta ads guide landing pages. */
+import Advisors from './Advisors.astro';
+import FinalCta from './FinalCta.astro';
+import Hero from './Hero.astro';
+import Inside from './Inside.astro';
+import TrustStrip from '@/components/shared/TrustStrip.astro';
+import type { Guide } from '@/types/site';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+---
+
+<div class="ambient-glow">
+  <Hero guide={guide} />
+  <Inside guide={guide} />
+  <Advisors />
+  <FinalCta guide={guide} />
+  <TrustStrip overlapFooter />
+</div>

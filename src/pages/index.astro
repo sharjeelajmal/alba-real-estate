@@ -1,0 +1,30 @@
+---
+/** Temporary homepage. The full homepage is built in Milestone 2. */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Heading from '@/components/ui/Heading.astro';
+import Section from '@/components/ui/Section.astro';
+import { ROUTES } from '@/constants/navigation';
+import { site } from '@/lib/site';
+---
+
+<BaseLayout
+  title={`${site.name} | Mortgage & Real Estate Guidance`}
+  description="Purchase, refinance, first-time buyer and self-employed mortgage guidance from Jorge and Chloe Alba. Book a free mortgage review."
+>
+  <Section>
+    <div class="max-w-3xl">
+      <Eyebrow class="animate-enter">Mortgage &amp; real estate</Eyebrow>
+      <Heading level={1} size="display" class="mt-5 animate-enter animation-delay-100">{site.tagline}</Heading>
+      <p class="mt-6 max-w-xl text-lead text-muted-foreground animate-enter animation-delay-200">
+        Jorge and Chloe Alba help families buy, refinance and plan with confidence.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3 animate-enter animation-delay-300">
+        <Button href={site.links.calendly} external size="lg" icon="calendar" track="ScheduleCallClick">Book a Review</Button>
+        <Button href={ROUTES.firstTimeGuide} variant="outline" size="lg" icon="download">Get the Guide</Button>
+        <Button href={ROUTES.quiz} variant="ghost" size="lg" iconAfter="arrow-right" track="QuizClick">Take the Quiz</Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

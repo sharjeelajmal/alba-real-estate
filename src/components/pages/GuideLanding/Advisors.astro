@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import chloe from '@/assets/images/chloe-alba.jpg';
+import jorge from '@/assets/images/jorge-alba.jpg';
+import Button from '@/components/ui/Button.astro';
+import Container from '@/components/ui/Container.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Heading from '@/components/ui/Heading.astro';
+import { site } from '@/lib/site';
+
+const [jorgeInfo, chloeInfo] = site.team;
+const portraits = [
+  { src: jorge, name: jorgeInfo?.name ?? 'Jorge Alba', role: jorgeInfo?.role ?? '' },
+  { src: chloe, name: chloeInfo?.name ?? 'Chloe Alba', role: chloeInfo?.role ?? '' },
+];
+---
+
+<section class="relative py-10 sm:py-16" aria-labelledby="advisors-title">
+  <Container class="grid grid-cols-1 items-center gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-20">
+    <div class="grid grid-cols-2 gap-4 sm:gap-5">
+      {
+        portraits.map((p, i) => (
+          <figure class:list={['group/portrait relative', i === 1 && 'mt-8 sm:mt-16']} data-reveal="fade-up" data-reveal-delay={i * 140}>
+            <div class="photo-frame aspect-[4/5] rounded-xl shadow-lg">
+              <Image
+                src={p.src}
+                alt={p.name}
+                widths={[320, 480, 640]}
+                sizes="(min-width: 1024px) 280px, 45vw"
+                class="h-full w-full object-cover object-top transition-transform duration-[1.4s] ease-out-expo group-hover/portrait:scale-105"
+              />
+            </div>
+            <figcaption class="glass absolute inset-x-2 bottom-2 rounded-md px-3 py-2 sm:inset-x-3 sm:bottom-3 sm:px-4 sm:py-3">
+              <span class="block text-small font-semibold text-heading">{p.name}</span>
+              <span class="block text-micro text-muted-foreground sm:text-caption">{p.role}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <div data-reveal="slide-left">
+      <Eyebrow tone="heading">Meet your team</Eyebrow>
+      <Heading level={2} id="advisors-title" class="mt-3 sm:mt-5">
+        Real people who <span class="text-gold">pick up the phone.</span>
+      </Heading>
+      <p class="mt-3 max-w-lg text-small text-muted-foreground sm:mt-6 sm:text-lead">
+        Jorge brings six years of mortgage experience, from traditional loans to bank statement, DSCR and fix-and-flip financing.
+        Chloe is a Colorado Realtor who guides first-time buyers and families relocating to Colorado. Book a free 15-minute review
+        and leave knowing your price range, your payment and your next step.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3 sm:mt-9">
+        <Button href={site.links.calendly} external icon="calendar" arrow size="lg" class="w-full sm:w-auto" track="ScheduleCallClick">Book a free review</Button>
+      </div>
+    </div>
+  </Container>
+
+</section>

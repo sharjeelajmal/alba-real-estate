@@ -1,0 +1,124 @@
+---
+import Brand from './Brand.astro';
+import Button from '@/components/ui/Button.astro';
+import Container from '@/components/ui/Container.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { MAIN_NAV } from '@/constants/navigation';
+import { site, telHref } from '@/lib/site';
+
+interface Props {
+  /** landing = logo only, no navigation (keeps ad traffic focused on the form) */
+  variant?: 'site' | 'landing';
+}
+
+const { variant = 'site' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+
+// Staggered entrance for mobile menu items
+const STAGGER = ['delay-75', 'delay-100', 'delay-150', 'delay-200', 'delay-300'];
+const { phone } = site.contact;
+---
+
+<header
+  data-header
+  data-scrolled="false"
+  class:list={[
+    'group/header sticky top-0 z-50 border-b transition-[background-color,border-color,box-shadow] duration-500 ease-out-expo',
+    'border-transparent bg-background/60 backdrop-blur-xl',
+    'data-[scrolled=true]:border-border/70 data-[scrolled=true]:bg-background/85 data-[scrolled=true]:shadow-sm',
+  ]}
+>
+  <Container class:list={['flex h-(--header-height) items-center justify-between gap-6', variant === 'site' && 'lg:grid lg:grid-cols-[1fr_auto_1fr]']}>
+    <Brand linkHome={variant === 'site'} />
+
+    {
+      variant === 'landing' ? (
+        <div class="flex items-center gap-4">
+          <p class="hidden items-center gap-2 rounded-full border border-border bg-surface/70 px-4 py-2 text-caption font-medium text-heading backdrop-blur lg:inline-flex">
+            <Icon name="badge-check" class="size-5 text-accent-bright" />
+            Licensed mortgage advisors
+          </p>
+          <span class="hidden sm:block">
+            <Button href={site.links.calendly} external size="sm" icon="calendar" arrow track="ScheduleCallClick">Book a Review</Button>
+          </span>
+        </div>
+      ) : (
+        <>
+          <nav aria-label="Main" class="hidden lg:block">
+            <ul class="flex items-center gap-10">
+              {MAIN_NAV.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={isActive(item.href) ? 'page' : undefined}
+                    class="relative py-2 text-small font-semibold text-heading transition-colors hover:text-accent after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-gold-500 after:transition-transform after:duration-500 after:ease-out-expo hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div class="hidden justify-self-end lg:block">
+            <Button href={site.links.calendly} external size="sm" icon="calendar" arrow track="ScheduleCallClick">
+              Book a Review
+            </Button>
+          </div>
+
+          <button
+            type="button"
+            data-nav-toggle
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            aria-label="Open menu"
+            class="group/toggle -mr-2 grid size-12 place-items-center rounded-full text-heading transition-colors hover:bg-muted lg:hidden"
+          >
+            <span class="relative block h-3.5 w-6" aria-hidden="true">
+              <span class="absolute inset-x-0 top-0 h-0.5 rounded-full bg-current transition-[translate,rotate] duration-500 ease-out-expo group-aria-expanded/toggle:translate-y-1.5 group-aria-expanded/toggle:rotate-45" />
+              <span class="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-current transition-[translate,rotate] duration-500 ease-out-expo group-aria-expanded/toggle:-translate-y-1.5 group-aria-expanded/toggle:-rotate-45" />
+            </span>
+          </button>
+        </>
+      )
+    }
+  </Container>
+</header>
+
+{
+    variant === 'site' && (
+      <div
+        id="mobile-nav"
+        data-open="false"
+        inert
+        class="group/nav fixed inset-x-0 top-(--header-height) bottom-0 z-40 overflow-y-auto bg-background opacity-0 invisible transition-[opacity,visibility] duration-500 ease-out-expo data-[open=true]:visible data-[open=true]:opacity-100 lg:hidden"
+      >
+        <Container class="flex min-h-full flex-col pb-10 pt-6">
+          <ul class="divide-y divide-border border-b border-border">
+            {MAIN_NAV.map((item, i) => (
+              <li class:list={['translate-y-3 opacity-0 transition-[translate,opacity] duration-700 ease-out-expo group-data-[open=true]/nav:translate-y-0 group-data-[open=true]/nav:opacity-100', STAGGER[i]]}>
+                <a
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                  class="flex items-center justify-between py-5 text-h3 text-heading aria-[current=page]:text-accent"
+                >
+                  {item.label}
+                  <Icon name="arrow-right" class="size-5 text-accent-bright" />
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div class:list={['mt-8 grid gap-3 translate-y-3 opacity-0 transition-[translate,opacity] duration-700 ease-out-expo group-data-[open=true]/nav:translate-y-0 group-data-[open=true]/nav:opacity-100', STAGGER[4]]}>
+            <Button href={site.links.calendly} external block size="lg" icon="calendar" arrow track="ScheduleCallClick">
+              Book a free mortgage review
+            </Button>
+            {phone && (
+              <Button href={telHref(phone)} variant="outline" block size="lg" icon="phone">
+                {phone}
+              </Button>
+            )}
+          </div>
+        </Container>
+      </div>
+    )
+  }

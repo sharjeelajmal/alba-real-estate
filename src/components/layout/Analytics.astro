@@ -1,0 +1,30 @@
+---
+/**
+ * Meta Pixel + GA4 base tags. Rendered only when IDs are set in src/data/site.json.
+ * Conversion events are fired separately through lib/track.ts.
+ */
+import { site } from '@/lib/site';
+
+const { metaPixelId, ga4Id } = site.tracking;
+const isValidId = (id: string) => /^[A-Z0-9-]+$/i.test(id);
+
+const pixel = metaPixelId && isValidId(metaPixelId) ? metaPixelId : null;
+const ga4 = ga4Id && isValidId(ga4Id) ? ga4Id : null;
+
+const pixelSnippet = pixel
+  ? `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixel}');fbq('track','PageView');`
+  : '';
+const ga4Snippet = ga4
+  ? `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;gtag('js',new Date());gtag('config','${ga4}');`
+  : '';
+---
+
+{pixel && <script is:inline set:html={pixelSnippet} />}
+{
+  ga4 && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4}`} />
+      <script is:inline set:html={ga4Snippet} />
+    </>
+  )
+}

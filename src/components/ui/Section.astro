@@ -1,0 +1,30 @@
+---
+import Container from './Container.astro';
+
+type Tone = 'default' | 'muted' | 'surface' | 'inverse';
+
+interface Props {
+  id?: string;
+  tone?: Tone;
+  /** Remove vertical padding (for sections that manage their own spacing) */
+  flush?: boolean;
+  containerSize?: 'site' | 'prose';
+  class?: string;
+  'aria-labelledby'?: string;
+}
+
+const { id, tone = 'default', flush = false, containerSize = 'site', class: className, ...rest } = Astro.props;
+
+const TONES: Record<Tone, string> = {
+  default: 'bg-background',
+  muted: 'bg-muted',
+  surface: 'bg-surface',
+  inverse: 'bg-inverse text-inverse-foreground [--color-heading:var(--color-surface)]',
+};
+---
+
+<section id={id} class:list={[TONES[tone], !flush && 'py-(--spacing-section)', className]} {...rest}>
+  <Container size={containerSize}>
+    <slot />
+  </Container>
+</section>

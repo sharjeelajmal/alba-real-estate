@@ -1,0 +1,12 @@
+---
+/** Layout for Meta ads landing pages: no navigation, compact footer, same compliance. */
+import BaseLayout from './BaseLayout.astro';
+import type { SeoProps } from '@/types/site';
+
+type Props = SeoProps;
+---
+
+<BaseLayout {...Astro.props} variant="landing">
+  <slot name="head" slot="head" />
+  <slot />
+</BaseLayout>

@@ -1,0 +1,114 @@
+{
+  "first-time-homebuyer": {
+    "formName": "first-time-homebuyer-guide",
+    "route": "/first-time-homebuyer-guide/",
+    "thankYouRoute": "/thank-you/first-time-homebuyer/",
+    "pdf": "/guides/first-time-homebuyer-guide.pdf",
+    "seo": {
+      "title": "Free First-Time Homebuyer Guide",
+      "description": "Download the free first-time homebuyer guide from Jorge and Chloe Alba: budget, down payment options, credit and closing, explained in plain English."
+    },
+    "badge": "Free guide · Instant download",
+    "headline": "Your first home may be",
+    "headlineAccent": "closer than you think.",
+    "intro": "A free guide from Jorge and Chloe Alba to Colorado mortgage and down payment assistance options, written for first-time buyers.",
+    "highlights": [
+      "Low-down-payment loans from 3% and 3.5% down*",
+      "Colorado down payment assistance, including CHFA and metroDPA",
+      "A checklist of what to have ready before you apply"
+    ],
+    "formTitle": "Get your free guide",
+    "formNote": "Download it instantly. We'll email you a copy too.",
+    "submitLabel": "Send me the guide",
+    "insideTitle": "Four paths to",
+    "insideIntro": "Low-down-payment financing and Colorado assistance can work together, depending on eligibility.",
+    "steps": [
+      {
+        "title": "Conventional first-time buyer",
+        "text": "From 3% down* on a primary residence for eligible buyers with stable income."
+      },
+      {
+        "title": "FHA home loan",
+        "text": "From 3.5% down*, with more flexible credit and underwriting for qualifying borrowers."
+      },
+      {
+        "title": "CHFA down payment assistance",
+        "text": "A grant or deferred second mortgage for eligible Colorado buyers."
+      },
+      {
+        "title": "metroDPA",
+        "text": "Help with upfront costs for eligible Front Range buyers through a second mortgage."
+      }
+    ],
+    "thankYou": {
+      "title": "Your guide is ready",
+      "text": "Download it below. We've also sent a copy to your email, so you can come back to it anytime.",
+      "downloadLabel": "Download the guide",
+      "nextTitle": "Want a plan for your first home?",
+      "nextText": "Book a free 15-minute first-time homebuyer review with Jorge. We'll go over your estimated monthly payment, available down payment assistance and closing costs."
+    },
+    "cta": {
+      "title": "Ready for your",
+      "accent": "first home?",
+      "text": "Start with the free guide, or talk it through with Jorge in a free 15-minute review."
+    },
+    "note": "*Starting down payments are illustrative. Eligibility, credit, occupancy, mortgage insurance, lender requirements and costs vary. Assistance amounts, limits and eligibility can change.",
+    "insideAccent": "homeownership in Colorado"
+  },
+  "self-employed-borrower": {
+    "formName": "self-employed-borrower-guide",
+    "route": "/self-employed-borrower-guide/",
+    "thankYouRoute": "/thank-you/self-employed-borrower/",
+    "pdf": "/guides/self-employed-borrower-guide.pdf",
+    "seo": {
+      "title": "Free Self-Employed Borrower Guide",
+      "description": "Download the free self-employed borrower guide from Jorge and Chloe Alba: how lenders read your income, bank statement loans and how to prepare."
+    },
+    "badge": "Free guide · Instant download",
+    "headline": "Self-employed?",
+    "headlineAccent": "There's more than one way to qualify.",
+    "intro": "A free guide from Jorge and Chloe Alba to four loan programs that qualify you on business activity instead of tax-return income.",
+    "highlights": [
+      "Bank statement and 1099-only loans, from 10% down*",
+      "Profit and loss and asset depletion options",
+      "What to prepare so your approval moves faster"
+    ],
+    "formTitle": "Get your free guide",
+    "formNote": "Download it instantly. We'll email you a copy too.",
+    "submitLabel": "Send me the guide",
+    "insideTitle": "Four ways to qualify",
+    "insideIntro": "The best option depends on how you earn, what documentation you have, and the funds you can use.",
+    "steps": [
+      {
+        "title": "Bank statement loan",
+        "text": "Qualify on 12 months of eligible deposits. From 10% down, 660+ credit*."
+      },
+      {
+        "title": "1099-only loan",
+        "text": "Use two years of 1099s instead of tax-return net income. From 10% down, 660+ credit*."
+      },
+      {
+        "title": "Profit and loss loan",
+        "text": "Qualify with a reliable P&L statement. From 20% down, 660+ credit*."
+      },
+      {
+        "title": "Asset depletion loan",
+        "text": "Turn eligible savings and investments into qualifying income. From 20% down, 680+ credit*."
+      }
+    ],
+    "thankYou": {
+      "title": "Your guide is ready",
+      "text": "Download it below. We've also sent a copy to your email, so you can come back to it anytime.",
+      "downloadLabel": "Download the guide",
+      "nextTitle": "Want a plan for your income?",
+      "nextText": "Book a free 15-minute mortgage options review with Jorge. We'll look at how lenders will see your income and which programs fit."
+    },
+    "cta": {
+      "title": "Your income can",
+      "accent": "open the door.",
+      "text": "Start with the free guide, or talk it through with Jorge in a free 15-minute review."
+    },
+    "note": "*Illustrative program starting points. Actual minimums, pricing, required history and eligibility vary by lender.",
+    "insideAccent": "when you're self-employed"
+  }
+}

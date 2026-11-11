@@ -1,0 +1,83 @@
+{
+  "name": "Alba Real Estate Group",
+  "poweredBy": "Loan Advisor Group",
+  "tagline": "Mortgage guidance you can trust, from your first home to your next refinance.",
+  "contact": {
+    "phone": "720-295-4741",
+    "email": "jorge@albahometeam.com",
+    "address": "2826 N Federal Blvd, Denver, CO 80211"
+  },
+  "licenses": {
+    "individualNmls": "1935035",
+    "companyName": "Loan Advisor Group",
+    "companyNmls": "1647915",
+    "realtorName": "Chloe Alba",
+    "realtorLicense": "100109832",
+    "brokerage": "Realty of America",
+    "stateLicenses": [
+      {
+        "state": "CO",
+        "number": "100542014"
+      },
+      {
+        "state": "CA",
+        "number": "02232662"
+      },
+      {
+        "state": "AZ",
+        "number": "2001179"
+      }
+    ]
+  },
+  "licensedStates": "CO, CA, AZ",
+  "links": {
+    "calendly": "https://calendly.com/jorge-albahometeam/15min",
+    "nmlsConsumerAccess": "https://www.nmlsconsumeraccess.org/"
+  },
+  "disclaimer": "This is not a commitment to lend. All loans are subject to credit approval, underwriting guidelines and property eligibility. Programs, rates and terms are subject to change without notice.",
+  "tracking": {
+    "metaPixelId": "",
+    "ga4Id": ""
+  },
+  "socials": {
+    "facebook": "#",
+    "x": "#",
+    "linkedin": "#",
+    "instagram": "#",
+    "youtube": "#"
+  },
+  "trust": [
+    {
+      "icon": "badge-check",
+      "title": "Licensed advisors",
+      "text": "NMLS 1935035"
+    },
+    {
+      "icon": "calendar",
+      "title": "Free 15-minute review",
+      "text": "No cost, no obligation"
+    },
+    {
+      "icon": "home",
+      "title": "Purchase and refinance",
+      "text": "First-time and self-employed buyers"
+    },
+    {
+      "icon": "shield",
+      "title": "Equal Housing Opportunity",
+      "text": "Company NMLS 1647915"
+    }
+  ],
+  "team": [
+    {
+      "name": "Jorge Alba",
+      "role": "Mortgage Advisor · NMLS 1935035",
+      "bio": "I've spent the past six years helping families and business owners find the right financing for their homes and investments. I have experience with everything from traditional mortgages to bank statement, DSCR, and fix-and-flip loans. I enjoy finding solutions that make sense for each client's situation and helping them reach their real estate goals."
+    },
+    {
+      "name": "Chloe Alba",
+      "role": "Realtor · Realty of America",
+      "bio": "Over the past year, I've worked with families, first-time homebuyers, and clients relocating to Colorado, helping them navigate the real estate market with confidence. I understand that buying a home is a significant decision, and I'm dedicated to providing thoughtful guidance, honest communication, and a personalized experience. I enjoy building lasting relationships with my clients and helping them find a home that aligns with their needs, lifestyle, and long-term goals."
+    }
+  ]
+}

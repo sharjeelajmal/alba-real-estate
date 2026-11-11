@@ -1,0 +1,11 @@
+---
+import ThankYou from '@/components/pages/ThankYou/ThankYou.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { getGuide } from '@/lib/guides';
+
+const guide = getGuide('self-employed-borrower');
+---
+
+<LandingLayout title="Your guide is ready" description="Download your free self-employed borrower guide." noindex>
+  <ThankYou guide={guide} />
+</LandingLayout>

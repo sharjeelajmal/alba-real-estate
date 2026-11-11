@@ -1,0 +1,33 @@
+---
+/**
+ * Stat strip component preview. Demo values only (this page is internal and noindex).
+ * Live pages must use verified numbers from the client, never these placeholders.
+ */
+import Container from '@/components/ui/Container.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+
+const STATS: { icon: IconName; value: string; label: string }[] = [
+  { icon: 'home', value: '10K+', label: 'Happy Clients' },
+  { icon: 'handshake', value: '5K+', label: 'Properties Sold' },
+  { icon: 'star', value: '4.9/5', label: 'Client Rating' },
+  { icon: 'shield', value: '100%', label: 'Trusted & Secure' },
+];
+---
+
+<div class="relative z-10 -mb-12 sm:-mb-20">
+  <Container>
+    <ul class="grid border border-gold-200/70 bg-ivory-50/95 shadow-md backdrop-blur-xl grid-cols-2 gap-y-6 rounded-xl px-4 py-6 lg:-mx-8 lg:grid-cols-4 lg:divide-x lg:divide-border lg:px-6 lg:py-6" data-reveal="fade-up">
+      {
+        STATS.map((s) => (
+          <li class="flex items-center justify-center gap-4">
+            <Icon name={s.icon} class="size-11 text-gold-700" strokeWidth={1.6} />
+            <span class="grid">
+              <span class="text-stat text-heading">{s.value}</span>
+              <span class="text-caption text-muted-foreground">{s.label}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</div>

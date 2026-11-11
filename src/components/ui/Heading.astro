@@ -1,0 +1,30 @@
+---
+/**
+ * Decouples document structure (level) from visual size (size),
+ * so SEO hierarchy never forces a design compromise.
+ */
+type Level = 1 | 2 | 3 | 4;
+type Size = 'display' | 'h1' | 'h2' | 'h3';
+
+interface Props {
+  level?: Level;
+  size?: Size;
+  id?: string;
+  class?: string;
+}
+
+const SIZE_BY_LEVEL: Record<Level, Size> = { 1: 'h1', 2: 'h2', 3: 'h3', 4: 'h3' };
+const SIZES: Record<Size, string> = {
+  display: 'text-display',
+  h1: 'text-h1',
+  h2: 'text-h2',
+  h3: 'text-h3',
+};
+
+const { level = 2, size, id, class: className } = Astro.props;
+const Tag = `h${level}` as const;
+---
+
+<Tag id={id} class:list={[SIZES[size ?? SIZE_BY_LEVEL[level]], className]}>
+  <slot />
+</Tag>

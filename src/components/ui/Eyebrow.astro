@@ -1,0 +1,22 @@
+---
+interface Props {
+  /** Show the short rule before the text */
+  line?: boolean;
+  /** accent on light surfaces, inverse on dark surfaces */
+  tone?: 'accent' | 'inverse' | 'heading';
+  class?: string;
+}
+
+const { line = true, tone = 'accent', class: className } = Astro.props;
+
+const TONES = {
+  accent: 'text-accent',
+  inverse: 'text-inverse-accent',
+  /** dark label with a gold rule */
+  heading: 'text-heading [--eyebrow-line:var(--color-gold-500)]',
+} as const;
+---
+
+<p class:list={['text-eyebrow', TONES[tone], line && 'eyebrow-line', className]}>
+  <slot />
+</p>

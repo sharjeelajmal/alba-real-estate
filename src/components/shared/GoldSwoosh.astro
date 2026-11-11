@@ -1,0 +1,18 @@
+---
+/** Thin gold curves that sweep across hero backgrounds and draw in on load. Decorative. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<svg
+  class:list={['draw-path pointer-events-none overflow-hidden [--path-length:2200]', className]}
+  viewBox="0 0 1440 800"
+  preserveAspectRatio="none"
+  fill="none"
+  aria-hidden="true"
+>
+  <path d="M-40 620 C 320 520, 520 760, 860 560 S 1300 180, 1500 120" class="stroke-gold-500/40" stroke-width="1.2" vector-effect="non-scaling-stroke" />
+  <path d="M-40 700 C 360 600, 620 820, 940 640 S 1320 300, 1500 260" class="stroke-gold-300/50" stroke-width="1" vector-effect="non-scaling-stroke" />
+</svg>

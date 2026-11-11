@@ -1,0 +1,97 @@
+---
+/**
+ * "Inside the guide": style-guide typography block with the tilted photo,
+ * then the guide's options as dark luxury cards.
+ */
+import { Image } from 'astro:assets';
+import poolHouse from '@/assets/images/photos/house-pool-dusk.jpg';
+import Button from '@/components/ui/Button.astro';
+import Container from '@/components/ui/Container.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import Icon, { type IconName } from '@/components/ui/Icon.astro';
+import type { Guide } from '@/types/site';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+const CARD_ICONS: IconName[] = ['home', 'key', 'percent', 'shield'];
+---
+
+<section class="relative overflow-hidden py-10 sm:py-16" aria-labelledby="inside-title">
+  <div class="pointer-events-none absolute top-14 left-14 hidden size-[19rem] rounded-full border-[1.5px] border-gold-400/70 [mask-image:linear-gradient(to_right,#000_18%,transparent_42%)] lg:block" aria-hidden="true"></div>
+
+  <Container class="relative">
+    <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-14">
+      <div data-reveal="fade-up">
+        <Eyebrow tone="heading">Inside the guide</Eyebrow>
+        <h2 id="inside-title" class="mt-3 text-h2 sm:mt-5">
+          {guide.insideTitle}
+          <span class="block text-gold">{guide.insideAccent}</span>
+        </h2>
+        <p class="mt-3 max-w-lg text-body text-foreground sm:mt-4">{guide.insideIntro}</p>
+        <ul class="mt-5 grid gap-2.5 sm:mt-6 sm:gap-3">
+          {
+            guide.highlights.map((item) => (
+              <li class="flex items-start gap-3 text-small text-foreground sm:text-body">
+                <span class="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-linear-to-b from-gold-500 to-gold-700 text-surface shadow-gold">
+                  <Icon name="check" class="size-3.5" strokeWidth={2.8} />
+                </span>
+                {item}
+              </li>
+            ))
+          }
+        </ul>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <Button href="#get-guide" variant="accent" icon="download">Get the free guide</Button>
+        </div>
+      </div>
+
+      <!-- Tilted photo with a "Free PDF guide" card -->
+      <div class="relative mx-auto h-64 w-full max-w-md sm:h-80 lg:max-w-lg lg:translate-x-6" data-reveal="slide-left">
+        <div class="dot-grid absolute -top-4 -right-2 h-24 w-36 opacity-70" aria-hidden="true"></div>
+        <div class="absolute top-0 left-0 size-36 -rotate-[6deg] rounded-xl bg-gold-100 shadow-sm sm:size-44" aria-hidden="true"></div>
+        <div class="absolute right-0 bottom-0 h-48 w-[66%] rotate-[8deg] rounded-xl bg-gold-100 shadow-md sm:h-60" aria-hidden="true"></div>
+        <div class="glass absolute top-6 left-2 grid w-32 -rotate-[6deg] place-items-center gap-2.5 rounded-lg px-3 py-5 text-center sm:w-40 sm:px-4 sm:py-7">
+          <span class="grid size-9 place-items-center rounded-full bg-gold-700 text-surface">
+            <Icon name="file-text" class="size-4.5" strokeWidth={2} />
+          </span>
+          <span class="text-small leading-tight font-semibold text-heading sm:text-body">Free PDF<br />guide</span>
+        </div>
+        <div class="absolute top-2 right-0 z-10 h-52 w-[66%] rotate-[8deg] overflow-hidden rounded-xl shadow-lg transition-[rotate] duration-700 ease-out-expo hover:rotate-[4deg] sm:h-[17.5rem]">
+          <Image src={poolHouse} alt="Modern home with an infinity pool at dusk" widths={[400, 704, 1000]} sizes="(min-width: 640px) 340px, 60vw" class="h-full w-full scale-110 object-cover" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Options as dark luxury cards -->
+    <ol class="mt-12 grid grid-cols-1 gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-6">
+      {
+        guide.steps.map((step, i) => (
+          <li
+            class="group/card ambient-glow-dark relative overflow-hidden rounded-xl border border-inverse-border p-5 shadow-lg transition-[translate,box-shadow] duration-500 ease-out-expo hover:-translate-y-1.5 sm:p-7"
+            data-reveal="fade-up"
+            data-reveal-delay={i * 90}
+          >
+            <div class="pointer-events-none absolute top-1/2 -right-16 size-48 -translate-y-1/2 sm:size-56" aria-hidden="true">
+              <span class="absolute inset-0 rounded-full border border-gold-500/15"></span>
+              <span class="absolute inset-6 rounded-full border border-gold-500/20"></span>
+              <span class="absolute inset-12 rounded-full border border-gold-500/25"></span>
+            </div>
+            <div class="relative flex items-start gap-4">
+              <span class="grid size-11 shrink-0 place-items-center rounded-full border border-gold-500/60 text-gold-500 shadow-glow transition-[background-color,color] duration-500 group-hover/card:bg-gold-500 group-hover/card:text-espresso-950">
+                <Icon name={CARD_ICONS[i % CARD_ICONS.length] ?? 'home'} class="size-5" strokeWidth={1.6} />
+              </span>
+              <span class="grid gap-1">
+                <span class="text-micro font-semibold tracking-widest text-inverse-accent uppercase">Option {String(i + 1).padStart(2, '0')}</span>
+                <span class="text-h3 text-surface">{step.title}</span>
+                <span class="text-small text-inverse-muted">{step.text}</span>
+              </span>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-4 max-w-4xl text-caption text-muted-foreground">{guide.note}</p>
+  </Container>
+</section>

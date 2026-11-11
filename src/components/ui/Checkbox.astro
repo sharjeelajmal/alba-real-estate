@@ -1,0 +1,24 @@
+---
+interface Props {
+  name: string;
+  required?: boolean;
+  id?: string;
+  class?: string;
+}
+
+const { name, required = false, id = `f-${name}`, class: className } = Astro.props;
+---
+
+<div class:list={['group/field', className]} data-field>
+  <label for={id} class="grid cursor-pointer grid-cols-[auto_1fr] items-start gap-3 text-caption text-muted-foreground group-data-invalid/field:text-danger">
+    <input
+      id={id}
+      name={name}
+      type="checkbox"
+      value="yes"
+      required={required}
+      class="mt-0.5 size-5 cursor-pointer accent-primary"
+    />
+    <span><slot /></span>
+  </label>
+</div>

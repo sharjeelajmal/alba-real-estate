@@ -1,0 +1,131 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '@/assets/images/alba-logo-white.png';
+import ComplianceNotice from '@/components/shared/ComplianceNotice.astro';
+import SkylineArt from '@/components/shared/SkylineArt.astro';
+import Container from '@/components/ui/Container.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { GUIDE_NAV, MAIN_NAV, ROUTES } from '@/constants/navigation';
+import { site, telHref } from '@/lib/site';
+import type { SocialNetwork } from '@/types/site';
+
+interface Props {
+  /** landing = compact footer without navigation columns */
+  variant?: 'site' | 'landing';
+}
+
+const { variant = 'site' } = Astro.props;
+const { phone, email, address } = site.contact;
+const year = new Date().getFullYear();
+const socials = (Object.entries(site.socials) as [SocialNetwork, string][]).filter(([, url]) => url);
+const SOCIAL_LABEL: Record<SocialNetwork, string> = { facebook: 'Facebook', x: 'X', linkedin: 'LinkedIn', instagram: 'Instagram', youtube: 'YouTube' };
+
+const linkClass = 'link-underline font-medium text-inverse-foreground transition-colors hover:text-inverse-accent';
+const headingClass = 'mb-5 text-small font-bold uppercase tracking-[0.08em] text-surface';
+---
+
+<footer class="relative mt-auto text-small text-inverse-muted">
+  <!-- Cream wave dips into the dark band below the stats strip, edged by a glowing gold line -->
+  <svg class="-mb-px block h-20 w-full sm:h-[9.5rem]" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="footer-curve" x1="0" x2="1" y1="0" y2="0">
+        <stop offset="0" class="[stop-color:var(--color-gold-500)]" stop-opacity="0.5" />
+        <stop offset="0.3" class="[stop-color:var(--color-gold-300)]" stop-opacity="1" />
+        <stop offset="1" class="[stop-color:var(--color-gold-500)]" stop-opacity="0.7" />
+      </linearGradient>
+    </defs>
+    <rect width="1440" height="150" class="fill-inverse" />
+    <path d="M0 0 H1440 V76 C 1150 90, 800 140, 520 136 C 300 133, 120 108, 0 68 Z" class="fill-background" />
+    <path d="M0 74 C 120 114, 300 139, 520 142 C 800 146, 1150 96, 1440 82" fill="none" stroke="url(#footer-curve)" stroke-width="2" vector-effect="non-scaling-stroke" class="drop-shadow-[0_0_6px_rgb(227_201_141_/_0.9)]" />
+  </svg>
+
+  <div class="footer-glow relative overflow-hidden">
+    <Container class="relative pt-6 pb-10 lg:px-[calc(var(--spacing-container)+2.5rem)]">
+      <div class:list={['relative grid gap-12 pb-10', variant === 'site' && 'lg:grid-cols-[1.1fr_2fr]']}>
+        <SkylineArt class="absolute -right-32 bottom-0 hidden w-[23rem] text-gold-300 drop-shadow-[0_0_6px_rgb(227_201_141_/_0.85)] lg:block" />
+        <span class="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-gold-500/25 to-gold-300/80" aria-hidden="true"></span>
+        <div class="max-w-xs">
+          <Image src={logoWhite} alt={site.name} widths={[200, 360]} sizes="176px" class="h-auto w-44" />
+          <p class="mt-4 text-caption font-bold uppercase tracking-wide text-inverse-accent">Powered by {site.poweredBy}</p>
+          {variant === 'site' && <p class="mt-3 text-small text-inverse-foreground/85">{site.tagline}</p>}
+          {
+            socials.length > 0 && (
+              <ul class="mt-6 -ml-2 flex gap-2">
+                {socials.map(([network, url]) => (
+                  <li>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={SOCIAL_LABEL[network]}
+                      class="grid size-9 place-items-center rounded-full text-inverse-foreground transition-[color,translate] duration-300 hover:-translate-y-0.5 hover:text-inverse-accent"
+                    >
+                      <Icon name={network} class="size-5.5" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+
+        {
+          variant === 'site' && (
+            <div class="grid gap-10 sm:grid-cols-[0.85fr_1fr_0.9fr]">
+              <nav aria-label="Footer">
+                <h2 class={headingClass}>Explore</h2>
+                <ul class="grid gap-3">
+                  {MAIN_NAV.map((item) => (
+                    <li><a href={item.href} class={linkClass}>{item.label}</a></li>
+                  ))}
+                </ul>
+              </nav>
+              <div>
+                <h2 class={headingClass}>Guides &amp; tools</h2>
+                <ul class="grid gap-3">
+                  {GUIDE_NAV.map((item) => (
+                    <li><a href={item.href} class={linkClass} data-track={item.href === ROUTES.quiz ? 'QuizClick' : undefined}>{item.label}</a></li>
+                  ))}
+                  <li>
+                    <a href={site.links.calendly} target="_blank" rel="noopener" class={linkClass} data-track="ScheduleCallClick">Book a free review</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h2 class={headingClass}>Contact</h2>
+                <ul class="grid gap-3.5">
+                  {phone && (
+                    <li class="flex items-center gap-3"><Icon name="phone" class="size-4 text-inverse-accent" /><a href={telHref(phone)} class={linkClass}>{phone}</a></li>
+                  )}
+                  {email && (
+                    <li class="flex items-center gap-3"><Icon name="mail" class="size-4 text-inverse-accent" /><a href={`mailto:${email}`} class={linkClass}>{email}</a></li>
+                  )}
+                  {address && (
+                    <li class="flex items-start gap-3"><Icon name="map-pin" class="mt-1 size-4 text-inverse-accent" /><span class="text-inverse-foreground">{address}</span></li>
+                  )}
+                  <li class="flex items-center gap-3"><Icon name="calendar" class="size-4 text-inverse-accent" /><a href={site.links.calendly} target="_blank" rel="noopener" class={linkClass} data-track="ScheduleCallClick">Schedule a call</a></li>
+                </ul>
+              </div>
+            </div>
+          )
+        }
+      </div>
+
+      <div class="grid gap-6 pt-10">
+        <ComplianceNotice />
+        <p class="max-w-3xl text-caption text-inverse-muted">
+          {site.disclaimer} Verify licensing at
+          <a href={site.links.nmlsConsumerAccess} target="_blank" rel="noopener" class="underline underline-offset-2 hover:text-inverse-accent">NMLS Consumer Access</a>.
+        </p>
+        <div class="flex flex-col gap-3 text-caption sm:flex-row sm:items-center sm:justify-between">
+          <p>© {year} {site.name}. All rights reserved.</p>
+          <p class="flex items-center gap-3">
+            <a href={ROUTES.privacy} class={linkClass}>Privacy Policy</a>
+            <span aria-hidden="true" class="text-inverse-border">|</span>
+            <a href={ROUTES.terms} class={linkClass}>Terms of Use</a>
+          </p>
+        </div>
+      </div>
+    </Container>
+  </div>
+</footer>

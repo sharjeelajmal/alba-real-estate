@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /thank-you/
+Disallow: /styleguide/
+
+Sitemap: https://albarealestategroup.com/sitemap-index.xml

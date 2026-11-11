@@ -1,0 +1,17 @@
+---
+/** Internal design-system reference. Not linked, not indexed, excluded from the sitemap. */
+import Hero from '@/components/pages/Styleguide/Hero.astro';
+import Showcase from '@/components/pages/Styleguide/Showcase.astro';
+import Stats from '@/components/pages/Styleguide/Stats.astro';
+import Typography from '@/components/pages/Styleguide/Typography.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Style guide" description="Internal design system reference." noindex>
+  <div class="ambient-glow">
+    <Hero />
+    <Typography />
+    <Showcase />
+    <Stats />
+  </div>
+</BaseLayout>

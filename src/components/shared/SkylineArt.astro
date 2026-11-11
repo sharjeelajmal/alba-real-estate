@@ -1,0 +1,53 @@
+---
+/** Glowing gold city skyline with lit windows, anchored to a horizon line. Decorative. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+
+// [x, width, height] of each tower on a 400 x 200 canvas (ground at y = 196)
+const TOWERS: [number, number, number][] = [
+  [70, 16, 34], [90, 14, 52], [108, 20, 74], [132, 14, 46], [150, 22, 112],
+  [176, 16, 88], [196, 26, 150], [226, 18, 104], [248, 24, 176], [276, 16, 120],
+  [296, 20, 140], [320, 14, 82], [338, 22, 128], [364, 16, 70], [384, 14, 96],
+];
+const GROUND = 196;
+
+// Deterministic window pattern so the build output never changes
+const windows = TOWERS.flatMap(([x, w, h], t) => {
+  const cols = Math.max(1, Math.floor((w - 4) / 5));
+  const rows = Math.floor((h - 10) / 9);
+  const out: { x: number; y: number; o: number }[] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const seed = (t * 31 + r * 7 + c * 13) % 10;
+      if (seed > 5) continue;
+      out.push({ x: x + 3 + c * 5, y: GROUND - h + 7 + r * 9, o: seed < 2 ? 1 : 0.55 });
+    }
+  }
+  return out;
+});
+---
+
+<svg class:list={['pointer-events-none overflow-hidden', className]} viewBox="0 0 400 200" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="skyline-horizon" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="currentColor" stop-opacity="0" />
+      <stop offset="0.55" stop-color="currentColor" stop-opacity="0.7" />
+      <stop offset="1" stop-color="currentColor" stop-opacity="1" />
+    </linearGradient>
+    <radialGradient id="skyline-glow" cx="0.75" cy="1" r="0.6">
+      <stop offset="0" stop-color="currentColor" stop-opacity="0.28" />
+      <stop offset="1" stop-color="currentColor" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect x="0" y="40" width="400" height="160" fill="url(#skyline-glow)" />
+  <g stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
+    {TOWERS.map(([x, w, h]) => <rect x={x} y={GROUND - h} width={w} height={h} />)}
+    <path d="M207 46 V30 M259 20 V4 M161 84 V72" />
+  </g>
+  <g fill="currentColor">
+    {windows.map((win) => <rect x={win.x} y={win.y} width="2.4" height="3.2" opacity={win.o} />)}
+  </g>
+  <rect x="0" y={GROUND} width="400" height="1.6" fill="url(#skyline-horizon)" />
+</svg>

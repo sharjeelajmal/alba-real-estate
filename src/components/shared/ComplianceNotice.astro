@@ -1,0 +1,35 @@
+---
+/** Licensing line required on every page. Values come from src/data/site.json. */
+import EqualHousingMark from './EqualHousingMark.astro';
+import { site } from '@/lib/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const { individualNmls, companyName, companyNmls, stateLicenses, realtorName, realtorLicense, brokerage } = site.licenses;
+const stateLine = stateLicenses.map((l) => `${l.state} ${l.number}`).join(' | ');
+
+const items = [
+  `Individual NMLS ${individualNmls}`,
+  `Company NMLS: ${companyName} ${companyNmls}`,
+  `State licenses: ${stateLine}`,
+  `${realtorName}, Realtor, CO License ${realtorLicense}, ${brokerage}`,
+  'Equal Housing Opportunity',
+];
+---
+
+<div class:list={['flex items-center gap-4', className]}>
+  <EqualHousingMark class="size-10 text-inverse-foreground" />
+  <ul class="grid gap-1 text-small font-medium text-inverse-foreground md:flex md:flex-wrap md:gap-x-2.5">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-2.5">
+          {i > 0 && <span aria-hidden="true" class="hidden text-inverse-muted md:inline">·</span>}
+          {item}
+        </li>
+      ))
+    }
+  </ul>
+</div>

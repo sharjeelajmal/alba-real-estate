@@ -1,0 +1,25 @@
+---
+/** Overlapping portraits of Jorge and Chloe with a short credential line. */
+import { Image } from 'astro:assets';
+import chloe from '@/assets/images/chloe-alba.jpg';
+import jorge from '@/assets/images/jorge-alba.jpg';
+import { site } from '@/lib/site';
+
+interface Props {
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+const { tone = 'light', class: className } = Astro.props;
+const ring = tone === 'light' ? 'ring-background' : 'ring-inverse';
+---
+
+<div class:list={['flex items-center gap-4', className]}>
+  <div class="flex">
+    <Image src={jorge} alt="" widths={[56, 112]} sizes="56px" class:list={['size-14 rounded-full object-cover object-top ring-4', ring]} />
+    <Image src={chloe} alt="" widths={[56, 112]} sizes="56px" class:list={['-ml-4 size-14 rounded-full object-cover object-top ring-4', ring]} />
+  </div>
+  <p class="text-small leading-snug">
+    <span class:list={['block font-semibold', tone === 'light' ? 'text-heading' : 'text-surface']}>Jorge and Chloe Alba</span>
+    <span class:list={[tone === 'light' ? 'text-muted-foreground' : 'text-inverse-muted']}>Licensed mortgage advisors · NMLS {site.licenses.individualNmls}</span>
+  </p>
+</div>
