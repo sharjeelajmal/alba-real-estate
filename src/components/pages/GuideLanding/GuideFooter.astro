@@ -1,0 +1,44 @@
+---
+/** Compliance footer for the guide pages: lender licensing first, brokerage disclosure second. */
+import EqualHousingMark from '@/components/shared/EqualHousingMark.astro';
+import { ROUTES } from '@/constants/navigation';
+import { site } from '@/lib/site';
+
+const { individualNmls, companyName, companyNmls, stateLicenses, realtorName, realtorLicense, jorgeRealtorLicense, brokerage } = site.licenses;
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink text-white/60">
+  <div class="mx-auto grid max-w-[72rem] gap-8 px-(--spacing-container) py-12 text-xs leading-relaxed sm:py-14">
+    <div class="grid gap-6 sm:grid-cols-[1fr_auto] sm:items-start">
+      <div class="grid gap-1.5">
+        <p class="text-sm font-semibold text-white">Jorge Alba, Mortgage Advisor</p>
+        <p>NMLS #{individualNmls} &nbsp;|&nbsp; {companyName}, NMLS #{companyNmls}</p>
+        <p>State licenses: {stateLicenses.map((l) => `${l.state} ${l.number}`).join('  |  ')}</p>
+        <p>
+          <a href={site.links.nmlsConsumerAccess} target="_blank" rel="noopener" class="underline decoration-white/25 underline-offset-2 hover:text-white">NMLS Consumer Access</a>
+          {site.socials.instagram && (
+            <>
+              &nbsp;|&nbsp;
+              <a href={site.socials.instagram} target="_blank" rel="noopener" class="underline decoration-white/25 underline-offset-2 hover:text-white">Instagram</a>
+            </>
+          )}
+        </p>
+      </div>
+      <div class="flex items-center gap-3 text-white/70">
+        <EqualHousingMark class="size-9" />
+        <span>Equal Housing<br />Opportunity</span>
+      </div>
+    </div>
+
+    <p class="border-t border-white/10 pt-6">
+      Real estate services by {site.name}, brokered by {brokerage}. Jorge Alba, CO Real Estate License {jorgeRealtorLicense}. {realtorName}, CO Real Estate License {realtorLicense}.
+      {site.contact.address}. {site.disclaimer}
+    </p>
+
+    <p class="flex flex-wrap gap-x-4 gap-y-1">
+      <span>&copy; {year} {site.name}</span>
+      <a href={ROUTES.privacy} class="hover:text-white">Privacy Policy</a>
+    </p>
+  </div>
+</footer>

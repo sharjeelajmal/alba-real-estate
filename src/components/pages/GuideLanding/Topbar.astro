@@ -1,0 +1,19 @@
+---
+/** Slim ink bar for the guide pages: brand on the left, Jorge's licensing on the right. */
+import { Image } from 'astro:assets';
+import logoWhite from '@/assets/images/alba-logo-white.png';
+import { site } from '@/lib/site';
+
+const { individualNmls } = site.licenses;
+---
+
+<header class="bg-ink text-white">
+  <div class="mx-auto flex h-14 max-w-[72rem] items-center justify-between gap-6 px-(--spacing-container) sm:h-16">
+    <Image src={logoWhite} alt={site.name} widths={[160, 240]} sizes="96px" loading="eager" class="h-8 w-auto sm:h-9" />
+    <p class="text-right text-[0.6875rem] leading-snug text-white/55 sm:text-xs">
+      <span class="text-white/85">Jorge Alba, Mortgage Advisor</span>
+      <span class="hidden sm:inline"> &nbsp;|&nbsp; </span>
+      <span class="block sm:inline">NMLS #{individualNmls} &nbsp;|&nbsp; Licensed in {site.licensedStates}</span>
+    </p>
+  </div>
+</header>

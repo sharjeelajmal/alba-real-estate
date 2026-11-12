@@ -1,0 +1,30 @@
+---
+/** Four quick facts under the hero, separated by hairlines. */
+import { site } from '@/lib/site';
+import type { Guide } from '@/types/site';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+const FACTS = [
+  ['Free', 'No cost to download'],
+  [`${guide.pages} pages`, 'Short and practical'],
+  [site.licensedStates, 'Licensed states'],
+  ['15 min', 'Free call with Jorge'],
+];
+---
+
+<div class="border-y border-hairline bg-white">
+  <dl class="mx-auto grid max-w-[72rem] grid-cols-2 lg:grid-cols-4">
+    {
+      FACTS.map(([value, label], i) => (
+        <div class:list={['px-(--spacing-container) py-7 sm:py-9', i % 2 === 1 && 'border-l border-hairline', i >= 2 && 'border-t border-hairline lg:border-t-0', i === 2 && 'lg:border-l']}>
+          <dt class="sr-only">{label}</dt>
+          <dd class="font-heading text-[1.75rem] leading-none font-semibold text-ink sm:text-[2.1rem]">{value}</dd>
+          <dd class="mt-2 text-xs text-graphite">{label}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>

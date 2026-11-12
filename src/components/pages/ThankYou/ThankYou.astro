@@ -1,12 +1,11 @@
 ---
-/** Post-submit page: instant PDF download + next step (book a review). Fires the Lead event once. */
-import AdvisorsChip from '@/components/shared/AdvisorsChip.astro';
-import GoldSwoosh from '@/components/shared/GoldSwoosh.astro';
-import Button from '@/components/ui/Button.astro';
-import Card from '@/components/ui/Card.astro';
-import Container from '@/components/ui/Container.astro';
-import Heading from '@/components/ui/Heading.astro';
-import Icon from '@/components/ui/Icon.astro';
+/** Post-submit page in the guide design: instant PDF download + book a call with Jorge. Fires the Lead event once. */
+import { Image } from 'astro:assets';
+import GuideFooter from '@/components/pages/GuideLanding/GuideFooter.astro';
+import Topbar from '@/components/pages/GuideLanding/Topbar.astro';
+import ftCover from '@/assets/images/guides/first-time-homebuyer-cover.jpg';
+import seCover from '@/assets/images/guides/self-employed-borrower-cover.jpg';
+import jorge from '@/assets/images/jorge-alba.jpg';
 import { site } from '@/lib/site';
 import type { Guide } from '@/types/site';
 
@@ -15,31 +14,61 @@ interface Props {
 }
 const { guide } = Astro.props;
 const { thankYou } = guide;
+const COVERS = { 'first-time-homebuyer-guide': ftCover, 'self-employed-borrower-guide': seCover } as const;
+const cover = COVERS[guide.formName as keyof typeof COVERS];
+const { individualNmls } = site.licenses;
 ---
 
-<section class="ambient-glow relative overflow-hidden py-(--spacing-section)" data-lead-confirmation>
-  <GoldSwoosh class="absolute inset-0 h-full w-full" />
-  <Container size="prose" class="relative text-center">
-    <span class="mx-auto grid size-16 place-items-center sm:size-20 rounded-full bg-linear-to-b from-gold-500 to-gold-700 text-surface shadow-gold animate-enter-scale">
-      <Icon name="check" class="size-9" strokeWidth={2.4} />
-    </span>
-    <Heading level={1} class="mt-5 animate-enter animation-delay-150 sm:mt-8">{thankYou.title}</Heading>
-    <p class="mx-auto mt-3 max-w-lg text-small text-muted-foreground animate-enter animation-delay-250 sm:mt-5 sm:text-lead">{thankYou.text}</p>
-    <div class="mt-7 flex justify-center animate-enter animation-delay-350 sm:mt-10">
-      <Button href={guide.pdf} download variant="accent" size="lg" icon="download" arrow>{thankYou.downloadLabel}</Button>
-    </div>
-  </Container>
+<Topbar />
 
-  <Container class="relative mt-10 sm:mt-20">
-    <Card variant="dark" padding="lg" class="grid grid-cols-1 items-center gap-8 lg:grid-cols-[1.4fr_1fr]" data-reveal="fade-up">
-      <div>
-        <Heading level={2} size="h3" class="text-surface">{thankYou.nextTitle}</Heading>
-        <p class="mt-2 max-w-xl text-small text-inverse-muted sm:mt-3 sm:text-body">{thankYou.nextText}</p>
-        <AdvisorsChip tone="dark" class="mt-7" />
-      </div>
-      <div class="lg:justify-self-end">
-        <Button href={site.links.calendly} external variant="light" size="lg" icon="calendar" arrow track="ScheduleCallClick">Book my free review</Button>
-      </div>
-    </Card>
-  </Container>
+<section class="bg-paper" data-lead-confirmation>
+  <div class="mx-auto grid max-w-[72rem] items-center gap-12 px-(--spacing-container) py-14 sm:py-20 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:py-24">
+    <div>
+      <p class="flex items-center gap-3 text-xs font-medium text-stone animate-fade">
+        <span class="h-px w-7 bg-stone/60" aria-hidden="true"></span>
+        Thank you
+      </p>
+      <h1 class="mt-5 font-heading text-[2.25rem] leading-[1.04] font-semibold text-ink sm:text-[3.4rem]">
+        <span class="block overflow-hidden pb-[0.08em]"><span class="block animate-rise" style="animation-delay:100ms">{thankYou.title}</span></span>
+      </h1>
+      <p class="mt-5 max-w-[30rem] text-base leading-[1.7] text-graphite animate-fade animation-delay-300 sm:text-[1.0625rem]">{thankYou.text}</p>
+      <a
+        href={guide.pdf}
+        download
+        class="group/btn mt-8 inline-flex h-13 items-center gap-3 rounded-[3px] bg-ink px-7 text-[0.9375rem] font-semibold whitespace-nowrap text-white transition-colors duration-300 hover:bg-black animate-fade animation-delay-400"
+      >
+        {thankYou.downloadLabel}
+        <svg class="size-4 transition-transform duration-300 ease-out-expo group-hover/btn:translate-y-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 2v9m0 0 3.5-3.5M8 11 4.5 7.5M2.5 14h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="relative mx-auto w-[min(62%,18rem)] animate-panel animation-delay-300 lg:w-full lg:max-w-[20rem]">
+      <div class="absolute inset-0 translate-x-5 translate-y-5 rounded-[2px] bg-[#e9e4da]" aria-hidden="true"></div>
+      <Image src={cover} alt={`Cover of the ${guide.seo.title}`} widths={[320, 480, 640]} sizes="(min-width: 1024px) 320px, 62vw" loading="eager" class="relative w-full rounded-[2px] shadow-[0_30px_60px_-20px_rgb(20_19_17/0.35),0_2px_6px_rgb(20_19_17/0.08)]" />
+    </div>
+  </div>
 </section>
+
+<section class="border-t border-hairline bg-white">
+  <div class="mx-auto grid max-w-[72rem] items-center gap-8 px-(--spacing-container) py-14 sm:py-20 lg:grid-cols-[auto_1fr_auto] lg:gap-12" data-reveal>
+    <Image src={jorge} alt="Jorge Alba" widths={[160, 240]} sizes="96px" class="size-20 rounded-full object-cover object-top sm:size-24" />
+    <div>
+      <h2 class="font-heading text-[1.9rem] leading-[1.08] font-semibold text-ink sm:text-[2.4rem]">{thankYou.nextTitle}</h2>
+      <p class="mt-3 max-w-[38rem] text-[0.9375rem] leading-[1.7] text-graphite">{thankYou.nextText}</p>
+      <p class="mt-3 text-xs text-stone">Jorge Alba, Mortgage Advisor &nbsp;|&nbsp; NMLS #{individualNmls}</p>
+    </div>
+    <a
+      href={site.links.calendly}
+      target="_blank"
+      rel="noopener"
+      data-track="ScheduleCallClick"
+      class="inline-flex h-13 items-center justify-center rounded-[3px] border border-ink px-7 text-[0.9375rem] font-semibold whitespace-nowrap text-ink transition-colors duration-300 hover:bg-ink hover:text-white"
+    >
+      Book a free 15-minute call
+    </a>
+  </div>
+</section>
+
+<GuideFooter />

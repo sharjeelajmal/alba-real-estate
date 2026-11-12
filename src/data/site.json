@@ -27,7 +27,8 @@
         "state": "AZ",
         "number": "2001179"
       }
-    ]
+    ],
+    "jorgeRealtorLicense": "100110271"
   },
   "licensedStates": "CO, CA, AZ",
   "links": {
@@ -40,11 +41,7 @@
     "ga4Id": ""
   },
   "socials": {
-    "facebook": "#",
-    "x": "#",
-    "linkedin": "#",
-    "instagram": "#",
-    "youtube": "#"
+    "instagram": "https://www.instagram.com/jorgealba.re/"
   },
   "trust": [
     {
@@ -72,12 +69,14 @@
     {
       "name": "Jorge Alba",
       "role": "Mortgage Advisor · NMLS 1935035",
-      "bio": "I've spent the past six years helping families and business owners find the right financing for their homes and investments. I have experience with everything from traditional mortgages to bank statement, DSCR, and fix-and-flip loans. I enjoy finding solutions that make sense for each client's situation and helping them reach their real estate goals."
+      "bio": "I've spent the past six years helping families and business owners find the right financing for their homes and investments. I have experience with everything from traditional mortgages to bank statement, DSCR, and fix-and-flip loans. I enjoy finding solutions that make sense for each client's situation and helping them reach their real estate goals.",
+      "instagram": "https://www.instagram.com/jorgealba.re/"
     },
     {
       "name": "Chloe Alba",
       "role": "Realtor · Realty of America",
-      "bio": "Over the past year, I've worked with families, first-time homebuyers, and clients relocating to Colorado, helping them navigate the real estate market with confidence. I understand that buying a home is a significant decision, and I'm dedicated to providing thoughtful guidance, honest communication, and a personalized experience. I enjoy building lasting relationships with my clients and helping them find a home that aligns with their needs, lifestyle, and long-term goals."
+      "bio": "Over the past year, I've worked with families, first-time homebuyers, and clients relocating to Colorado, helping them navigate the real estate market with confidence. I understand that buying a home is a significant decision, and I'm dedicated to providing thoughtful guidance, honest communication, and a personalized experience. I enjoy building lasting relationships with my clients and helping them find a home that aligns with their needs, lifestyle, and long-term goals.",
+      "instagram": "https://www.instagram.com/chloealba.realtor/"
     }
   ]
 }

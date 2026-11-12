@@ -1,0 +1,39 @@
+---
+/** Form section: Jorge's portrait and bio beside the lead form. */
+import { Image } from 'astro:assets';
+import jorge from '@/assets/images/jorge-alba.jpg';
+import GuideForm from './GuideForm.astro';
+import { site } from '@/lib/site';
+import type { Guide } from '@/types/site';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+const me = site.team.find((m) => m.name.startsWith('Jorge'));
+const { individualNmls } = site.licenses;
+---
+
+<section class="bg-white" aria-label="Get the guide">
+  <div class="mx-auto grid max-w-[72rem] gap-12 px-(--spacing-container) py-16 sm:py-24 lg:grid-cols-2 lg:gap-20">
+    <div class="order-2 lg:order-1" data-reveal>
+      <div class="relative aspect-[4/5] max-w-[26rem] overflow-hidden rounded-[2px] bg-paper">
+        <Image src={jorge} alt="Jorge Alba, Mortgage Advisor" widths={[400, 640, 900]} sizes="(min-width: 1024px) 416px, 90vw" class="size-full object-cover object-top" />
+      </div>
+      <p class="mt-6 text-[0.9375rem] font-semibold text-ink">Jorge Alba</p>
+      <p class="text-[0.8125rem] text-graphite">Mortgage Advisor &nbsp;|&nbsp; NMLS #{individualNmls}</p>
+      {me && <p class="mt-4 max-w-[26rem] text-[0.875rem] leading-[1.7] text-graphite">{me.bio}</p>}
+    </div>
+
+    <div class="order-1 lg:order-2 lg:pt-6" data-reveal>
+      <GuideForm
+        formName={guide.formName}
+        successUrl={guide.thankYouRoute}
+        title={guide.formTitle}
+        note={guide.formNote}
+        submitLabel={guide.submitLabel}
+        source={guide.seo.title}
+      />
+    </div>
+  </div>
+</section>

@@ -13,6 +13,8 @@ export interface Licenses {
   /** Real estate licensee shown in the footer (Colorado advertising rules require the brokerage name) */
   realtorName: string;
   realtorLicense: string;
+  /** Jorge is also a Colorado real estate licensee */
+  jorgeRealtorLicense: string;
   brokerage: string;
 }
 
@@ -29,6 +31,7 @@ export interface TeamMember {
   name: string;
   role: string;
   bio: string;
+  instagram?: string;
 }
 
 export interface SiteSettings {
@@ -44,7 +47,7 @@ export interface SiteSettings {
   };
   disclaimer: string;
   /** Leave a URL empty to hide that icon */
-  socials: Record<SocialNetwork, string>;
+  socials: Partial<Record<SocialNetwork, string>>;
   /** Factual trust points shown in the trust strip (no unverifiable claims) */
   trust: TrustItem[];
   team: TeamMember[];
@@ -91,6 +94,8 @@ export interface Guide {
   submitLabel: string;
   insideTitle: string;
   /** Second line of the inside heading, shown in gold */
+  /** Page count of the PDF, shown in the guide facts */
+  pages: number;
   insideAccent: string;
   insideIntro: string;
   steps: GuideStep[];

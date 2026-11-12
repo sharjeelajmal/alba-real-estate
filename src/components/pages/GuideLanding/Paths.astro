@@ -1,0 +1,37 @@
+---
+/** The options covered in the guide, as a quiet hairline grid. */
+import type { Guide } from '@/types/site';
+
+interface Props {
+  guide: Guide;
+}
+const { guide } = Astro.props;
+---
+
+<section class="bg-paper" aria-labelledby="paths-title">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-(--spacing-container) py-16 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+    <div data-reveal>
+      <p class="text-xs font-medium text-stone">What's inside</p>
+      <h2 id="paths-title" class="mt-4 font-heading text-[2.1rem] leading-[1.05] font-semibold text-ink sm:text-[2.8rem]">
+        {guide.insideTitle} {guide.insideAccent}
+      </h2>
+      <p class="mt-5 max-w-[28rem] text-[0.9375rem] leading-[1.7] text-graphite">{guide.insideIntro}</p>
+    </div>
+
+    <ul class="grid border-t border-hairline sm:grid-cols-2">
+      {
+        guide.steps.map((step, i) => (
+          <li
+            data-reveal
+            style={`transition-delay:${i * 80}ms`}
+            class:list={['border-b border-hairline py-7 sm:py-8', i % 2 === 0 ? 'sm:pr-8' : 'sm:border-l sm:pl-8']}
+          >
+            <h3 class="text-base font-semibold text-ink">{step.title}</h3>
+            <p class="mt-2 text-[0.875rem] leading-[1.65] text-graphite">{step.text}</p>
+          </li>
+        ))
+      }
+      {guide.note && <li class="pt-5 text-[0.6875rem] leading-relaxed text-stone sm:col-span-2">{guide.note}</li>}
+    </ul>
+  </div>
+</section>

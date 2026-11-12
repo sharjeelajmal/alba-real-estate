@@ -1,12 +1,19 @@
 ---
-/** Layout for Meta ads landing pages: no navigation, compact footer, same compliance. */
+/**
+ * Layout for Meta ads pages.
+ * guide = minimal guide landing pages (they render their own top bar and compliance footer)
+ * landing = focused layout with logo-only header and compact footer (thank-you pages)
+ */
 import BaseLayout from './BaseLayout.astro';
 import type { SeoProps } from '@/types/site';
 
-type Props = SeoProps;
+interface Props extends SeoProps {
+  variant?: 'landing' | 'guide';
+}
+const { variant = 'landing', ...seo } = Astro.props;
 ---
 
-<BaseLayout {...Astro.props} variant="landing">
+<BaseLayout {...seo} variant={variant}>
   <slot name="head" slot="head" />
   <slot />
 </BaseLayout>

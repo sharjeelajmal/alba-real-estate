@@ -6,6 +6,6 @@ import { getGuide } from '@/lib/guides';
 const guide = getGuide('first-time-homebuyer');
 ---
 
-<LandingLayout title={guide.seo.title} description={guide.seo.description}>
+<LandingLayout variant="guide" title={guide.seo.title} description={guide.seo.description}>
   <GuideLanding guide={guide} />
 </LandingLayout>

@@ -1,10 +1,11 @@
 ---
-/** Shared composition for both Meta ads guide landing pages. */
-import Advisors from './Advisors.astro';
-import FinalCta from './FinalCta.astro';
+/** Shared composition for both Meta ads guide pages (minimal design, Jorge-only). */
+import Facts from './Facts.astro';
+import GetGuide from './GetGuide.astro';
+import GuideFooter from './GuideFooter.astro';
 import Hero from './Hero.astro';
-import Inside from './Inside.astro';
-import TrustStrip from '@/components/shared/TrustStrip.astro';
+import Paths from './Paths.astro';
+import Topbar from './Topbar.astro';
 import type { Guide } from '@/types/site';
 
 interface Props {
@@ -13,10 +14,44 @@ interface Props {
 const { guide } = Astro.props;
 ---
 
-<div class="ambient-glow">
-  <Hero guide={guide} />
-  <Inside guide={guide} />
-  <Advisors />
-  <FinalCta guide={guide} />
-  <TrustStrip overlapFooter />
-</div>
+<Topbar />
+<Hero guide={guide} />
+<Facts guide={guide} />
+<Paths guide={guide} />
+<GetGuide guide={guide} />
+<GuideFooter />
+
+<!-- Mobile: a quiet sticky CTA once the hero buttons scroll away; hidden while the form is on screen -->
+<a
+  href="#get-guide"
+  data-sticky-cta
+  class="fixed inset-x-3 bottom-3 z-40 flex h-12 translate-y-[150%] items-center justify-center rounded-[3px] bg-ink text-[0.9375rem] font-semibold text-white shadow-[0_12px_30px_-10px_rgb(20_19_17/0.5)] transition-transform duration-500 ease-out-expo data-[show=true]:translate-y-0 lg:hidden"
+  aria-hidden="true"
+  tabindex="-1"
+>
+  Get the free guide
+</a>
+
+<script>
+  const cta = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const hero = document.querySelector('[data-hero-cta]');
+  const form = document.getElementById('get-guide');
+  if (cta && hero && form && 'IntersectionObserver' in window) {
+    let pastHero = false;
+    let formVisible = false;
+    const update = () => {
+      const show = pastHero && !formVisible;
+      cta.dataset.show = String(show);
+      cta.setAttribute('aria-hidden', String(!show));
+      cta.tabIndex = show ? 0 : -1;
+    };
+    new IntersectionObserver(([e]) => {
+      pastHero = !e.isIntersecting && e.boundingClientRect.top < 0;
+      update();
+    }).observe(hero);
+    new IntersectionObserver(([e]) => {
+      formVisible = e.isIntersecting;
+      update();
+    }).observe(form);
+  }
+</script>

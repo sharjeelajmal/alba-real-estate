@@ -13,7 +13,7 @@ import type { SeoProps } from '@/types/site';
 
 interface Props extends SeoProps {
   /** landing = focused ads layout (no navigation, compact footer) */
-  variant?: 'site' | 'landing';
+  variant?: 'site' | 'landing' | 'guide';
 }
 
 const { variant = 'site', ...seo } = Astro.props;
@@ -36,11 +36,11 @@ const { variant = 'site', ...seo } = Astro.props;
     >
       Skip to content
     </a>
-    <Header variant={variant} />
+    {variant !== 'guide' && <Header variant={variant} />}
     <main id="main" class="flex-1">
       <slot />
     </main>
-    <Footer variant={variant} />
+    {variant !== 'guide' && <Footer variant={variant} />}
     <script>
       import '@/scripts/site';
     </script>

@@ -1,0 +1,109 @@
+---
+/**
+ * Minimal lead form for the guide pages (Netlify Forms).
+ * Uses the same hooks as LeadForm (data-lead-form, data-field, data-submit, data-form-status),
+ * so validation, UTM capture, AJAX submit and the Lead event come from scripts/forms.ts.
+ */
+import { ROUTES } from '@/constants/navigation';
+import { site } from '@/lib/site';
+
+interface Props {
+  formName: string;
+  successUrl: string;
+  title: string;
+  note: string;
+  submitLabel: string;
+  source: string;
+}
+
+const { formName, successUrl, title, note, submitLabel, source } = Astro.props;
+const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'] as const;
+
+const FIELDS = [
+  { name: 'full_name', label: 'Full name', type: 'text', autocomplete: 'name', inputmode: undefined, placeholder: 'Jane Smith', error: 'Please enter your name.' },
+  { name: 'phone', label: 'Phone', type: 'tel', autocomplete: 'tel', inputmode: 'tel', placeholder: '(555) 123-4567', error: 'Enter a valid 10-digit phone number.' },
+  { name: 'email', label: 'Email', type: 'email', autocomplete: 'email', inputmode: 'email', placeholder: 'you@email.com', error: 'Enter a valid email address.' },
+] as const;
+---
+
+<form
+  id="get-guide"
+  name={formName}
+  method="POST"
+  action={successUrl}
+  data-netlify="true"
+  netlify-honeypot="company_website"
+  data-lead-form
+  data-success-url={successUrl}
+  data-lead-source={source}
+  novalidate
+  class="scroll-mt-6"
+>
+  <input type="hidden" name="form-name" value={formName} />
+  <input type="hidden" name="lead_source" value={source} />
+  <input type="hidden" name="page_url" value="" data-page-url />
+  {UTM_FIELDS.map((field) => <input type="hidden" name={field} value="" data-utm={field} />)}
+  <p class="sr-only" aria-hidden="true">
+    <label>Leave this field empty <input name="company_website" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <p class="text-xs font-medium text-stone">Free download</p>
+  <h2 class="mt-2 font-heading text-[2rem] leading-[1.05] font-semibold text-ink sm:text-[2.4rem]">{title}</h2>
+  <p class="mt-3 text-[0.9375rem] leading-relaxed text-graphite">{note}</p>
+
+  <div class="mt-7 grid gap-5">
+    {
+      FIELDS.map((f) => (
+        <div class="group/field grid gap-2" data-field>
+          <label for={`g-${f.name}`} class="text-[0.8125rem] font-medium text-ink">
+            {f.label}
+            <span class="text-stone" aria-hidden="true"> *</span>
+          </label>
+          <input
+            id={`g-${f.name}`}
+            name={f.name}
+            type={f.type}
+            autocomplete={f.autocomplete}
+            inputmode={f.inputmode}
+            placeholder={f.placeholder}
+            required
+            aria-describedby={`g-${f.name}-error`}
+            class="h-12 w-full rounded-[3px] border border-hairline bg-white px-4 text-base text-ink transition-[border-color,box-shadow] duration-200 placeholder:text-stone/80 hover:border-stone/60 focus:border-ink focus:shadow-[0_0_0_3px_rgb(20_19_17/0.08)] focus:outline-none group-data-invalid/field:border-danger"
+          />
+          <p id={`g-${f.name}-error`} class="hidden text-xs text-danger group-data-invalid/field:block" role="alert">{f.error}</p>
+        </div>
+      ))
+    }
+
+    <div class="group/field" data-field>
+      <label for="g-consent" class="grid cursor-pointer grid-cols-[auto_1fr] items-start gap-3 text-xs leading-relaxed text-graphite group-data-invalid/field:text-danger">
+        <input id="g-consent" name="consent" type="checkbox" value="yes" required class="mt-0.5 size-4 cursor-pointer accent-ink" />
+        <span>
+          I agree to be contacted by {site.name} by phone, text and email about my inquiry, including by automated means.
+          Consent is not a condition of any purchase. Msg and data rates may apply. See our
+          <a href={ROUTES.privacy} target="_blank" class="text-ink underline underline-offset-2">Privacy Policy</a>.
+        </span>
+      </label>
+    </div>
+
+    <button
+      type="submit"
+      data-submit
+      class="group/btn flex h-13 w-full items-center justify-center gap-3 rounded-[3px] bg-ink px-6 text-[0.9375rem] font-semibold whitespace-nowrap text-white transition-colors duration-300 hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink aria-busy:pointer-events-none aria-busy:opacity-70"
+    >
+      {submitLabel}
+      <svg class="size-4 transition-transform duration-300 ease-out-expo group-hover/btn:translate-y-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 2v9m0 0 3.5-3.5M8 11 4.5 7.5M2.5 14h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <p class="-mt-2 text-center text-xs text-danger empty:hidden" role="alert" aria-live="polite" data-form-status></p>
+    <p class="-mt-1 text-center text-xs text-stone">No obligation. Your details stay private.</p>
+  </div>
+
+  <div class="mt-8 border-t border-hairline pt-6 text-center text-[0.8125rem] text-graphite">
+    Rather talk it through?
+    <a href={site.links.calendly} target="_blank" rel="noopener" data-track="ScheduleCallClick" class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">
+      Book a free 15-minute call with Jorge
+    </a>
+  </div>
+</form>
