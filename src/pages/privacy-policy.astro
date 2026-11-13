@@ -1,0 +1,157 @@
+---
+/**
+ * Privacy Policy. Plain-language policy covering the lead forms, guide emails,
+ * scheduling, analytics/advertising pixels, SMS/phone consent and state privacy rights.
+ * Have the compliance team at Loan Advisor Group review before launch.
+ */
+import GuideFooter from '@/components/pages/GuideLanding/GuideFooter.astro';
+import Topbar from '@/components/pages/GuideLanding/Topbar.astro';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { site, telHref } from '@/lib/site';
+
+const EFFECTIVE = 'November 14, 2026';
+const { email, phone, address } = site.contact;
+const { companyName, companyNmls, brokerage } = site.licenses;
+
+const SECTIONS = [
+  { id: 'collect', title: 'Information we collect' },
+  { id: 'use', title: 'How we use your information' },
+  { id: 'contact', title: 'Phone, text and email consent' },
+  { id: 'share', title: 'How we share information' },
+  { id: 'cookies', title: 'Cookies, analytics and advertising' },
+  { id: 'retention', title: 'How long we keep information' },
+  { id: 'security', title: 'Security' },
+  { id: 'rights', title: 'Your choices and rights' },
+  { id: 'california', title: 'California residents' },
+  { id: 'children', title: 'Children' },
+  { id: 'changes', title: 'Changes to this policy' },
+  { id: 'reach', title: 'Contact us' },
+];
+---
+
+<LandingLayout variant="guide" title="Privacy Policy" description={`How ${site.name} collects, uses and protects your personal information.`}>
+  <Topbar />
+
+  <section class="bg-paper">
+    <div class="mx-auto max-w-[72rem] px-(--spacing-container) pt-12 pb-10 sm:pt-16 sm:pb-14">
+      <p class="flex items-center gap-3 text-xs font-medium text-stone">
+        <span class="h-px w-7 bg-stone/60" aria-hidden="true"></span>
+        Effective {EFFECTIVE}
+      </p>
+      <h1 class="mt-5 font-heading text-[2.4rem] leading-[1.04] font-semibold text-ink sm:text-[3.4rem]">Privacy Policy</h1>
+      <p class="mt-5 max-w-[40rem] text-base leading-[1.7] text-graphite">
+        This policy explains how {site.name} and Jorge Alba (together, “we”, “us”) collect, use and protect information when you
+        visit our websites, request a guide, book a call or contact us.
+      </p>
+    </div>
+  </section>
+
+  <div class="border-t border-hairline bg-white">
+    <div class="mx-auto grid max-w-[72rem] gap-12 px-(--spacing-container) py-12 sm:py-16 lg:grid-cols-[14rem_1fr] lg:gap-20">
+      <nav aria-label="On this page" class="hidden lg:block">
+        <ol class="sticky top-8 grid gap-2.5 text-[0.8125rem] text-graphite">
+          {SECTIONS.map((s) => <li><a href={`#${s.id}`} class="transition-colors hover:text-ink">{s.title}</a></li>)}
+        </ol>
+      </nav>
+
+      <article class="policy max-w-[42rem] text-[0.9375rem] leading-[1.75] text-graphite">
+        <h2 id="collect">Information we collect</h2>
+        <p><strong>Information you give us.</strong> When you fill out a form, we collect your name, phone number and email address, and your answers if you take our home loan quiz. If you book a call, our scheduling provider collects the details you enter there.</p>
+        <p><strong>Information collected automatically.</strong> Like most websites, we receive basic technical information such as your IP address, browser and device type, pages viewed, the page that referred you, and campaign details in the link you clicked (for example, which ad brought you here).</p>
+        <p>This website does not ask for your Social Security number, bank account details or other loan application information. If you choose to apply for a loan, that happens separately through {companyName} and is covered by its own privacy notice.</p>
+
+        <h2 id="use">How we use your information</h2>
+        <ul>
+          <li>To send you the guide or resources you requested.</li>
+          <li>To respond to you and follow up about your home buying or financing questions.</li>
+          <li>To schedule and hold consultations you book with us.</li>
+          <li>To understand how our website and ads perform, and to improve them.</li>
+          <li>To prevent spam and fraud, and to comply with legal and regulatory obligations.</li>
+        </ul>
+
+        <h2 id="contact">Phone, text and email consent</h2>
+        <p>When you submit a form and check the consent box, you agree that we may contact you about your inquiry by phone, text message and email, including by automated means, at the number and address you provide. Consent is not a condition of any purchase or loan. Message and data rates may apply, and message frequency varies.</p>
+        <p>You can opt out at any time: reply <strong>STOP</strong> to any text message, use the unsubscribe link or reply to any email, or tell us on a call. We do not sell or share your phone number or text messaging consent with third parties for their own marketing.</p>
+
+        <h2 id="share">How we share information</h2>
+        <p>We do not sell your personal information. We share it only as needed to serve you:</p>
+        <ul>
+          <li><strong>Within our team:</strong> Jorge Alba, our mortgage team at {companyName} (NMLS #{companyNmls}), and our real estate team at {site.name}, brokered by {brokerage}, when you ask for help with financing or buying a home.</li>
+          <li><strong>Service providers</strong> that help us run this website and contact you, such as website hosting and form handling, email delivery, appointment scheduling, and analytics and advertising platforms. They may use your information only to provide their services to us.</li>
+          <li><strong>When required by law</strong>, to respond to legal process, or to protect our rights and the safety of others.</li>
+        </ul>
+
+        <h2 id="cookies">Cookies, analytics and advertising</h2>
+        <p>We use cookies and similar technologies, including Google Analytics and the Meta (Facebook) Pixel, to measure visits, understand which ads and pages are helpful, and show our ads to people who may be interested. These tools may collect information about your activity on this site and other sites over time.</p>
+        <p>You can block or delete cookies in your browser settings, opt out of Google Analytics with the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics opt-out add-on</a>, and manage ad preferences in your <a href="https://www.facebook.com/adpreferences" target="_blank" rel="noopener">Facebook ad settings</a>. Our site does not currently respond to “Do Not Track” browser signals, but we honor Global Privacy Control signals where the law requires.</p>
+
+        <h2 id="retention">How long we keep information</h2>
+        <p>We keep your information for as long as needed to respond to you and serve you, and as required by the record-keeping rules that apply to mortgage and real estate businesses. When it is no longer needed, we delete or de-identify it.</p>
+
+        <h2 id="security">Security</h2>
+        <p>We use reasonable administrative, technical and physical safeguards, including encrypted (HTTPS) connections, to protect your information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.</p>
+
+        <h2 id="rights">Your choices and rights</h2>
+        <p>You may ask us to access, correct or delete the personal information we hold about you, or to stop contacting you. Depending on where you live, you may have additional rights under state law. To make a request, contact us using the details below. We will verify your request and respond within the time the law requires, and we will not treat you differently for using your rights.</p>
+
+        <h2 id="california">California residents</h2>
+        <p>If you live in California, the California Consumer Privacy Act gives you the right to know what personal information we collect and how we use it, to request deletion or correction, and to opt out of the sale or sharing of personal information for cross-context behavioral advertising. We do not sell personal information. To opt out of sharing for advertising, contact us or enable Global Privacy Control in your browser. In the past 12 months, we collected identifiers (such as name, phone, email and IP address), internet activity, and inferences about your home buying interests, for the purposes described above.</p>
+        <p>Information that is subject to the federal Gramm-Leach-Bliley Act, such as information you provide in a loan application, is governed by the lender’s separate privacy notice.</p>
+
+        <h2 id="children">Children</h2>
+        <p>Our website is intended for adults. We do not knowingly collect personal information from anyone under 18.</p>
+
+        <h2 id="changes">Changes to this policy</h2>
+        <p>We may update this policy from time to time. The effective date at the top shows when it was last changed.</p>
+
+        <h2 id="reach">Contact us</h2>
+        <p>
+          {site.name}<br />
+          {address}<br />
+          Email: <a href={`mailto:${email}`}>{email}</a><br />
+          Phone: <a href={telHref(phone)}>{phone}</a>
+        </p>
+      </article>
+    </div>
+  </div>
+
+  <GuideFooter />
+</LandingLayout>
+
+<style>
+  .policy :global(h2) {
+    margin-top: 3rem;
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    line-height: 1.15;
+    font-weight: 600;
+    color: var(--color-ink);
+    scroll-margin-top: 2rem;
+  }
+  .policy :global(h2:first-child) {
+    margin-top: 0;
+  }
+  .policy :global(p),
+  .policy :global(ul) {
+    margin-top: 1rem;
+  }
+  .policy :global(ul) {
+    display: grid;
+    gap: 0.6rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+  .policy :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .policy :global(a) {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--color-hairline);
+  }
+  .policy :global(a:hover) {
+    text-decoration-color: var(--color-ink);
+  }
+</style>
