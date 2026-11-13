@@ -94,6 +94,8 @@ export interface Guide {
   submitLabel: string;
   insideTitle: string;
   /** Second line of the inside heading, shown in gold */
+  /** Optional byline shown on its own line under the intro */
+  introBy?: string;
   /** Page count of the PDF, shown in the guide facts */
   pages: number;
   insideAccent: string;

@@ -68,7 +68,7 @@
     "badge": "Free guide · Instant download",
     "headline": "Self-employed?",
     "headlineAccent": "There's more than one way to qualify.",
-    "intro": "A plain-English guide to four loan programs that qualify you on your business activity, not your tax-return income. Written by Jorge Alba.",
+    "intro": "A simple guide to four mortgage options designed for self-employed borrowers. Learn how you may qualify using your business income, even if your tax returns don’t tell the full story.",
     "highlights": [
       "Bank statement and 1099-only loans, from 10% down*",
       "Profit and loss and asset depletion options",
@@ -111,6 +111,7 @@
     },
     "note": "*Illustrative program starting points. Actual minimums, pricing, required history and eligibility vary by lender.",
     "insideAccent": "when you're self-employed",
-    "pages": 4
+    "pages": 4,
+    "introBy": "By Jorge Alba"
   }
 }
