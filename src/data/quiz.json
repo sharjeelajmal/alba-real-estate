@@ -1,0 +1,130 @@
+{
+  "formName": "home-loan-quiz",
+  "thankYouRoute": "/thank-you/quiz/",
+  "seo": {
+    "title": "Purchase & Refinance Quiz",
+    "description": "Answer a few quick questions and Jorge Alba will show you your best home loan options in Colorado, California or Arizona."
+  },
+  "headline": "Buying or refinancing?",
+  "headlineAccent": "Find your best next step.",
+  "intro": "Answer a few quick questions. It takes about a minute, and Jorge will follow up with the options that fit you.",
+  "steps": [
+    {
+      "name": "goal",
+      "branch": "all",
+      "question": "What would you like to do?",
+      "options": [
+        { "value": "Buy a home", "label": "Buy a home", "hint": "First home, next home or investment", "goTo": "purchase" },
+        { "value": "Refinance", "label": "Refinance my current home", "hint": "Lower payment, cash out or a shorter term", "goTo": "refinance" }
+      ]
+    },
+    {
+      "name": "first_home",
+      "branch": "purchase",
+      "question": "Is this your first home?",
+      "options": [
+        { "value": "Yes", "label": "Yes, my first home" },
+        { "value": "No", "label": "No, I've owned before" }
+      ]
+    },
+    {
+      "name": "timeline",
+      "branch": "purchase",
+      "question": "When are you hoping to buy?",
+      "options": [
+        { "value": "Found a home", "label": "I've found a home or I'm under contract" },
+        { "value": "0-3 months", "label": "In the next 3 months" },
+        { "value": "3-6 months", "label": "In 3 to 6 months" },
+        { "value": "Exploring", "label": "Just exploring for now" }
+      ]
+    },
+    {
+      "name": "price",
+      "branch": "purchase",
+      "question": "What price range are you considering?",
+      "options": [
+        { "value": "Under $400k", "label": "Under $400,000" },
+        { "value": "$400k-$600k", "label": "$400,000 to $600,000" },
+        { "value": "$600k-$800k", "label": "$600,000 to $800,000" },
+        { "value": "$800k+", "label": "$800,000 or more" }
+      ]
+    },
+    {
+      "name": "down_payment",
+      "branch": "purchase",
+      "question": "How much have you saved for a down payment?",
+      "options": [
+        { "value": "Under 3%", "label": "Less than 3%", "hint": "Down payment assistance may help" },
+        { "value": "3-10%", "label": "3% to 10%" },
+        { "value": "10-20%", "label": "10% to 20%" },
+        { "value": "20%+", "label": "20% or more" }
+      ]
+    },
+    {
+      "name": "refi_goal",
+      "branch": "refinance",
+      "question": "What's your main goal?",
+      "options": [
+        { "value": "Lower payment", "label": "Lower my monthly payment" },
+        { "value": "Cash out", "label": "Take cash out", "hint": "Renovations, debt payoff or investing" },
+        { "value": "Shorter term", "label": "Pay off my home sooner" },
+        { "value": "Remove PMI", "label": "Remove mortgage insurance" }
+      ]
+    },
+    {
+      "name": "home_value",
+      "branch": "refinance",
+      "question": "About how much is your home worth?",
+      "options": [
+        { "value": "Under $400k", "label": "Under $400,000" },
+        { "value": "$400k-$600k", "label": "$400,000 to $600,000" },
+        { "value": "$600k-$800k", "label": "$600,000 to $800,000" },
+        { "value": "$800k+", "label": "$800,000 or more" }
+      ]
+    },
+    {
+      "name": "loan_balance",
+      "branch": "refinance",
+      "question": "About how much do you still owe?",
+      "options": [
+        { "value": "Under 50% of value", "label": "Less than half of its value" },
+        { "value": "50-80% of value", "label": "Half to 80% of its value" },
+        { "value": "Over 80% of value", "label": "More than 80% of its value" },
+        { "value": "Not sure", "label": "I'm not sure" }
+      ]
+    },
+    {
+      "name": "income_type",
+      "branch": "all",
+      "question": "How do you earn most of your income?",
+      "options": [
+        { "value": "W-2", "label": "W-2 employee" },
+        { "value": "Self-employed", "label": "Self-employed or business owner" },
+        { "value": "1099", "label": "1099 contractor" },
+        { "value": "Retired / other", "label": "Retired or other income" }
+      ]
+    },
+    {
+      "name": "credit",
+      "branch": "all",
+      "question": "What's your estimated credit score?",
+      "options": [
+        { "value": "740+", "label": "740 or higher" },
+        { "value": "680-739", "label": "680 to 739" },
+        { "value": "620-679", "label": "620 to 679" },
+        { "value": "Under 620 / not sure", "label": "Below 620 or not sure" }
+      ]
+    }
+  ],
+  "contact": {
+    "title": "Where should Jorge send your options?",
+    "note": "He'll review your answers personally and reach out with the loan options that fit. No obligation.",
+    "submitLabel": "See my options"
+  },
+  "thankYou": {
+    "title": "Thanks, you're all set",
+    "text": "Jorge will review your answers and reach out shortly with the options that fit you. Want to talk sooner? Pick a time below.",
+    "nextTitle": "Skip the wait",
+    "nextText": "Book a free 15-minute call and go over your options with Jorge directly."
+  }
+}

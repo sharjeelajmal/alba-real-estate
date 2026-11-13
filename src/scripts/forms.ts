@@ -115,10 +115,14 @@ function initForm(form: HTMLFormElement): void {
       }
 
       try {
-        sessionStorage.setItem(LEAD_PENDING_KEY, JSON.stringify({ form: form.getAttribute('name'), source: form.dataset.leadSource }));
+        sessionStorage.setItem(
+          LEAD_PENDING_KEY,
+          JSON.stringify({ form: form.getAttribute('name'), source: form.dataset.leadSource, quiz: form.hasAttribute('data-quiz') }),
+        );
       } catch {
         /* storage blocked: fall back to firing now */
         track('Lead', { content_name: form.getAttribute('name') ?? 'lead' });
+        if (form.hasAttribute('data-quiz')) track('QuizComplete', { content_name: form.getAttribute('name') ?? 'quiz' });
       }
       window.location.assign(successUrl);
     } catch (error) {
@@ -136,8 +140,9 @@ export function confirmLead(): void {
     const pending = sessionStorage.getItem(LEAD_PENDING_KEY);
     if (!pending) return;
     sessionStorage.removeItem(LEAD_PENDING_KEY);
-    const { form, source } = JSON.parse(pending) as { form?: string; source?: string };
+    const { form, source, quiz } = JSON.parse(pending) as { form?: string; source?: string; quiz?: boolean };
     track('Lead', { content_name: form ?? 'lead', lead_source: source });
+    if (quiz) track('QuizComplete', { content_name: form ?? 'quiz' });
   } catch {
     /* ignore */
   }

@@ -1,0 +1,13 @@
+---
+import GuideFooter from '@/components/pages/GuideLanding/GuideFooter.astro';
+import Topbar from '@/components/pages/GuideLanding/Topbar.astro';
+import Quiz from '@/components/pages/Quiz/Quiz.astro';
+import quiz from '@/data/quiz.json';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+---
+
+<LandingLayout variant="guide" title={quiz.seo.title} description={quiz.seo.description}>
+  <Topbar />
+  <Quiz />
+  <GuideFooter />
+</LandingLayout>

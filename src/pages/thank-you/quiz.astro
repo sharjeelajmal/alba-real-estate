@@ -1,0 +1,50 @@
+---
+/** After the quiz: confirmation + book a call. Fires Lead and QuizComplete once (scripts/forms.ts). */
+import { Image } from 'astro:assets';
+import jorge from '@/assets/images/jorge-alba.jpg';
+import GuideFooter from '@/components/pages/GuideLanding/GuideFooter.astro';
+import Topbar from '@/components/pages/GuideLanding/Topbar.astro';
+import quiz from '@/data/quiz.json';
+import LandingLayout from '@/layouts/LandingLayout.astro';
+import { site } from '@/lib/site';
+
+const { thankYou } = quiz;
+const { individualNmls } = site.licenses;
+---
+
+<LandingLayout variant="guide" title={thankYou.title} description="Your answers were received." noindex>
+  <Topbar />
+  <section class="bg-paper" data-lead-confirmation>
+    <div class="mx-auto max-w-[72rem] px-(--spacing-container) py-14 sm:py-20 lg:py-24">
+      <p class="flex items-center gap-3 text-xs font-medium text-stone animate-fade">
+        <span class="h-px w-7 bg-stone/60" aria-hidden="true"></span>
+        Answers received
+      </p>
+      <h1 class="mt-5 font-heading text-[2.25rem] leading-[1.04] font-semibold text-ink sm:text-[3.4rem]">
+        <span class="block overflow-hidden pb-[0.08em]"><span class="block animate-rise" style="animation-delay:100ms">{thankYou.title}</span></span>
+      </h1>
+      <p class="mt-5 max-w-[34rem] text-base leading-[1.7] text-graphite animate-fade animation-delay-300 sm:text-[1.0625rem]">{thankYou.text}</p>
+    </div>
+  </section>
+
+  <section class="border-t border-hairline bg-white">
+    <div class="mx-auto grid max-w-[72rem] items-center gap-8 px-(--spacing-container) py-14 sm:py-20 lg:grid-cols-[auto_1fr_auto] lg:gap-12" data-reveal>
+      <Image src={jorge} alt="Jorge Alba" widths={[160, 240]} sizes="96px" class="size-20 rounded-full object-cover object-top sm:size-24" />
+      <div>
+        <h2 class="font-heading text-[1.9rem] leading-[1.08] font-semibold text-ink sm:text-[2.4rem]">{thankYou.nextTitle}</h2>
+        <p class="mt-3 max-w-[38rem] text-[0.9375rem] leading-[1.7] text-graphite">{thankYou.nextText}</p>
+        <p class="mt-3 text-xs text-stone">Jorge Alba, Mortgage Advisor &nbsp;|&nbsp; NMLS #{individualNmls}</p>
+      </div>
+      <a
+        href={site.links.calendly}
+        target="_blank"
+        rel="noopener"
+        data-track="ScheduleCallClick"
+        class="inline-flex h-13 items-center justify-center rounded-[3px] bg-ink px-7 text-[0.9375rem] font-semibold whitespace-nowrap text-white transition-colors duration-300 hover:bg-black"
+      >
+        Book a free 15-minute call
+      </a>
+    </div>
+  </section>
+  <GuideFooter />
+</LandingLayout>

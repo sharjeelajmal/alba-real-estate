@@ -1,0 +1,239 @@
+---
+/**
+ * Purchase & Refinance quiz: one Netlify form, one question per screen, branching on the first answer.
+ * Every field exists in the static HTML so Netlify registers them all; the script only shows/hides steps.
+ * Contact step reuses the lead-form hooks (scripts/forms.ts) for validation, UTM capture, submit and the Lead event.
+ */
+import { Image } from 'astro:assets';
+import jorge from '@/assets/images/jorge-alba.jpg';
+import { ROUTES } from '@/constants/navigation';
+import quiz from '@/data/quiz.json';
+import { site } from '@/lib/site';
+
+const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'] as const;
+const CONTACT_FIELDS = [
+  { name: 'full_name', label: 'Full name', type: 'text', autocomplete: 'name', inputmode: undefined, placeholder: 'Jane Smith', error: 'Please enter your name.' },
+  { name: 'phone', label: 'Phone', type: 'tel', autocomplete: 'tel', inputmode: 'tel', placeholder: '(555) 123-4567', error: 'Enter a valid 10-digit phone number.' },
+  { name: 'email', label: 'Email', type: 'email', autocomplete: 'email', inputmode: 'email', placeholder: 'you@email.com', error: 'Enter a valid email address.' },
+] as const;
+const { individualNmls } = site.licenses;
+---
+
+<section class="bg-paper" aria-labelledby="quiz-title">
+  <div class="mx-auto grid max-w-[72rem] gap-10 px-(--spacing-container) pt-10 pb-16 sm:pt-16 sm:pb-24 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+    <!-- Intro -->
+    <div class="lg:pt-2">
+      <p class="flex items-center gap-3 text-xs font-medium text-stone animate-fade">
+        <span class="h-px w-7 bg-stone/60" aria-hidden="true"></span>
+        Free, about 1 minute
+      </p>
+      <h1 id="quiz-title" class="mt-5 font-heading text-[2.25rem] leading-[1.04] font-semibold tracking-[-0.015em] text-ink sm:text-[2.9rem]">
+        {
+          [quiz.headline, quiz.headlineAccent].map((line, i) => (
+            <span class="block overflow-hidden pb-[0.08em]">
+              <span class="block animate-rise" style={`animation-delay:${100 + i * 120}ms`}>{line}</span>
+            </span>
+          ))
+        }
+      </h1>
+      <p class="mt-5 max-w-[28rem] text-base leading-[1.7] text-graphite animate-fade animation-delay-400">{quiz.intro}</p>
+      <figure class="mt-8 hidden items-center gap-4 border-t border-hairline pt-7 animate-fade animation-delay-500 sm:flex">
+        <Image src={jorge} alt="Jorge Alba" widths={[96, 160]} sizes="52px" loading="eager" class="size-13 rounded-full object-cover object-top" />
+        <figcaption class="text-[0.8125rem] leading-relaxed text-graphite">
+          <span class="block text-[0.9375rem] font-semibold text-ink">Jorge Alba, Mortgage Advisor</span>
+          NMLS #{individualNmls}
+        </figcaption>
+      </figure>
+    </div>
+
+    <!-- Quiz -->
+    <form
+      name={quiz.formName}
+      method="POST"
+      action={quiz.thankYouRoute}
+      data-netlify="true"
+      netlify-honeypot="company_website"
+      data-lead-form
+      data-quiz
+      data-success-url={quiz.thankYouRoute}
+      data-lead-source={quiz.seo.title}
+      novalidate
+      class="rounded-[3px] border border-hairline bg-white p-6 shadow-[0_24px_60px_-30px_rgb(20_19_17/0.25)] animate-panel animation-delay-300 sm:p-10"
+    >
+      <input type="hidden" name="form-name" value={quiz.formName} />
+      <input type="hidden" name="lead_source" value={quiz.seo.title} />
+      <input type="hidden" name="page_url" value="" data-page-url />
+      {UTM_FIELDS.map((field) => <input type="hidden" name={field} value="" data-utm={field} />)}
+      <p class="sr-only" aria-hidden="true">
+        <label>Leave this field empty <input name="company_website" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <!-- Progress -->
+      <div class="flex items-center justify-between gap-4 text-xs text-stone">
+        <button type="button" data-quiz-back class="invisible inline-flex items-center gap-1.5 font-medium text-graphite transition-colors hover:text-ink">
+          <svg class="size-3.5" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Back
+        </button>
+        <span data-quiz-count aria-live="polite">Question 1</span>
+      </div>
+      <div class="mt-3 h-px w-full bg-hairline" aria-hidden="true">
+        <div data-quiz-bar class="h-px w-0 bg-ink transition-[width] duration-500 ease-out-expo"></div>
+      </div>
+
+      {
+        quiz.steps.map((step, i) => (
+          <fieldset data-quiz-step data-branch={step.branch} hidden={i !== 0} class="mt-8">
+            <legend class="font-heading text-[1.75rem] leading-[1.1] font-semibold text-ink sm:text-[2.1rem]">{step.question}</legend>
+            <div class="mt-6 grid gap-2.5">
+              {step.options.map((opt) => (
+                <label class="group/opt relative flex cursor-pointer items-center justify-between gap-4 rounded-[3px] border border-hairline px-5 py-4 transition-[border-color,background-color] duration-200 hover:border-stone/70 has-checked:border-ink has-checked:bg-paper has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink">
+                  <input
+                    type="radio"
+                    name={step.name}
+                    value={opt.value}
+                    data-go-to={'goTo' in opt ? opt.goTo : undefined}
+                    class="sr-only"
+                  />
+                  <span>
+                    <span class="block text-[0.9375rem] font-medium text-ink">{opt.label}</span>
+                    {'hint' in opt && opt.hint && <span class="mt-0.5 block text-xs text-graphite">{opt.hint}</span>}
+                  </span>
+                  <span class="grid size-5 shrink-0 place-items-center rounded-full border border-hairline transition-colors group-has-checked/opt:border-ink group-has-checked/opt:bg-ink" aria-hidden="true">
+                    <svg class="size-3 text-white opacity-0 group-has-checked/opt:opacity-100" viewBox="0 0 16 16" fill="none"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+
+      <!-- Contact -->
+      <fieldset data-quiz-step data-quiz-contact data-branch="all" hidden class="mt-8">
+        <legend class="font-heading text-[1.75rem] leading-[1.1] font-semibold text-ink sm:text-[2.1rem]">{quiz.contact.title}</legend>
+        <p class="mt-3 text-[0.9375rem] leading-relaxed text-graphite">{quiz.contact.note}</p>
+        <div class="mt-6 grid gap-5">
+          {
+            CONTACT_FIELDS.map((f) => (
+              <div class="group/field grid gap-2" data-field>
+                <label for={`q-${f.name}`} class="text-[0.8125rem] font-medium text-ink">
+                  {f.label}
+                  <span class="text-stone" aria-hidden="true"> *</span>
+                </label>
+                <input
+                  id={`q-${f.name}`}
+                  name={f.name}
+                  type={f.type}
+                  autocomplete={f.autocomplete}
+                  inputmode={f.inputmode}
+                  placeholder={f.placeholder}
+                  required
+                  aria-describedby={`q-${f.name}-error`}
+                  class="h-12 w-full rounded-[3px] border border-hairline bg-white px-4 text-base text-ink transition-[border-color,box-shadow] duration-200 placeholder:text-stone/80 hover:border-stone/60 focus:border-ink focus:shadow-[0_0_0_3px_rgb(20_19_17/0.08)] focus:outline-none group-data-invalid/field:border-danger"
+                />
+                <p id={`q-${f.name}-error`} class="hidden text-xs text-danger group-data-invalid/field:block" role="alert">{f.error}</p>
+              </div>
+            ))
+          }
+          <div class="group/field" data-field>
+            <label for="q-consent" class="grid cursor-pointer grid-cols-[auto_1fr] items-start gap-3 text-xs leading-relaxed text-graphite group-data-invalid/field:text-danger">
+              <input id="q-consent" name="consent" type="checkbox" value="yes" required class="mt-0.5 size-4 cursor-pointer accent-ink" />
+              <span>
+                I agree to be contacted by {site.name} by phone, text and email about my inquiry, including by automated means.
+                Consent is not a condition of any purchase. Msg and data rates may apply. See our
+                <a href={ROUTES.privacy} target="_blank" class="text-ink underline underline-offset-2">Privacy Policy</a>.
+              </span>
+            </label>
+          </div>
+          <button
+            type="submit"
+            data-submit
+            class="group/btn flex h-13 w-full items-center justify-center gap-3 rounded-[3px] bg-ink px-6 text-[0.9375rem] font-semibold whitespace-nowrap text-white transition-colors duration-300 hover:bg-black aria-busy:pointer-events-none aria-busy:opacity-70"
+          >
+            {quiz.contact.submitLabel}
+            <svg class="size-4 transition-transform duration-300 ease-out-expo group-hover/btn:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L9 4m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </button>
+          <p class="-mt-2 text-center text-xs text-danger empty:hidden" role="alert" aria-live="polite" data-form-status></p>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
+
+<script>
+  import { track } from '@/lib/track';
+
+  const form = document.querySelector<HTMLFormElement>('form[data-quiz]');
+  if (form) {
+    const steps = Array.from(form.querySelectorAll<HTMLFieldSetElement>('[data-quiz-step]'));
+    const back = form.querySelector<HTMLButtonElement>('[data-quiz-back]');
+    const count = form.querySelector<HTMLElement>('[data-quiz-count]');
+    const bar = form.querySelector<HTMLElement>('[data-quiz-bar]');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let branch = 'purchase';
+    const trail: number[] = [0];
+    let started = false;
+
+    const path = () => steps.filter((s) => s.dataset.branch === 'all' || s.dataset.branch === branch);
+
+    const show = (index: number, focus = true) => {
+      steps.forEach((s, i) => (s.hidden = i !== index));
+      const current = steps[index]!;
+      const route = path();
+      const pos = route.indexOf(current);
+      const isContact = current.hasAttribute('data-quiz-contact');
+      if (count) count.textContent = isContact ? 'Last step' : `Question ${pos + 1} of ${route.length - 1}`;
+      if (bar) bar.style.width = `${Math.round((pos / (route.length - 1)) * 100)}%`;
+      back?.classList.toggle('invisible', trail.length <= 1);
+      if (!reduce) current.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 420, easing: 'cubic-bezier(0.16,1,0.3,1)' });
+      if (focus) (current.querySelector<HTMLElement>('input:checked, input:not([type=hidden])') ?? current).focus({ preventScroll: true });
+      if (focus && current.getBoundingClientRect().top < 0) form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    };
+
+    const next = () => {
+      const current = steps[trail[trail.length - 1]!]!;
+      const route = path();
+      const target = route[route.indexOf(current) + 1];
+      if (!target) return;
+      trail.push(steps.indexOf(target));
+      show(steps.indexOf(target));
+    };
+
+    form.addEventListener('change', (event) => {
+      const input = event.target as HTMLInputElement;
+      if (input.type !== 'radio') return;
+      if (!started) {
+        started = true;
+        track('QuizClick', { quiz_step: input.name });
+      }
+      if (input.dataset.goTo) {
+        // Changing the first answer resets the other branch so stale answers aren't submitted
+        if (input.dataset.goTo !== branch) {
+          steps.filter((s) => s.dataset.branch === branch).forEach((s) => s.querySelectorAll<HTMLInputElement>('input').forEach((i) => (i.checked = false)));
+        }
+        branch = input.dataset.goTo;
+      }
+      window.setTimeout(next, reduce ? 0 : 260);
+    });
+
+    // Enter inside an earlier question must not submit the form before the contact step
+    form.addEventListener(
+      'submit',
+      (event) => {
+        if (form.querySelector<HTMLFieldSetElement>('[data-quiz-contact]')?.hidden) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      },
+      true,
+    );
+
+    back?.addEventListener('click', () => {
+      if (trail.length <= 1) return;
+      trail.pop();
+      show(trail[trail.length - 1]!);
+    });
+
+    show(0, false);
+  }
+</script>
