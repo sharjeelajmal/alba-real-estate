@@ -25,3 +25,17 @@
   for = "/guides/*"
   [headers.values]
     Cache-Control = "public, max-age=300"
+
+# Until the main website ships (Milestone 2), the bare domain opens the first-time buyer guide.
+# 302 (temporary) so browsers and search engines don't cache it. Remove both rules when the homepage launches.
+[[redirects]]
+  from = "/"
+  to = "/first-time-homebuyer-guide/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/styleguide/*"
+  to = "/first-time-homebuyer-guide/"
+  status = 302
+  force = true
